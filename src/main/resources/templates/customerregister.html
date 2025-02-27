@@ -43,12 +43,60 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="container">
         <div class="row">
-            <form action="#">
-                <div class="form-group">
-                    <la
+            <form action="/registeraccount" method="post">
+                <div class="col-lg-6 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label for="txtfname">First Name :</label>
+                        <input type="text" class="form-control" id="txtfname" name="txtfname" placeholder="Enter your first name">
+                        <br>
+                        <label for="txtemail">Email Address :</label>
+                        <input type="email" class="form-control" id="txtemail" name="txtemail" placeholder="Enter your Email Address">
+                        <br>
+                        <label for="txtpassword">Password :</label>
+                        <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="Enter your Password">
+                        <br>
+                        <label for="txtdob">Date of Birth :</label>
+                        <input type="date" class="form-control" id="txtdob" name="txtdob" placeholder="Enter your Date of Birth">
+                        <br>
+                        <label for="txtactype">Account Type :</label>
+                        <select class="form-control" id="txtactype" name="txtactype">
+                            <option value="saving_account">Saving Account</option>
+                            <option value="ccurrent_account">Current Account</option>
+
+                        </select>
+
+                    </div>
                 </div>
+                <div class="col-lg-6 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label for="txtlname">Last Name :</label>
+                        <input type="text" class="form-control" id="txtlname" name="txtlname" placeholder="Enter your last name">
+                        <br>
+                        <label for="txtmobilenumber">Mobile Number :</label>
+                        <input type="text" class="form-control" id="txtmobilenumber" name="txtmobilenumber" placeholder="Enter your mobile number">
+                        <br>
+                        <label for="txtaddress">Address :</label>
+                        <input type="text" class="form-control" id="txtaddress" name="txtaddress" placeholder="Enter your Address">
+                        <br>
+                        <label for="txtpostcode">Postal Code :</label>
+                        <input type="text" class="form-control" id="txtpostcode" name="txtpostcode" placeholder="Enter your postal code">
+                        <br>
+                        <label for="txtcountry">Country :</label>
+                        <input type="text" class="form-control" id="txtcountry" name="txtcountry" placeholder="Enter your Country">
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <div class="btnregister">
+                    <button type="submit">Create A New Account</button>
+                </div>
+                <br>
             </form>
         </div>
     </div>
