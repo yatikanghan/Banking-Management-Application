@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Admin {
     @Id
-    String admin_id;
+    int admin_id;
     @Column(nullable = false)
     String admin_emailid;
     @Column(nullable = false)
@@ -24,7 +24,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(String admin_id, String admin_emailid, String admin_password, String admin_name, String admin_role, String admin_status, String admin_created_at) {
+    public Admin(int admin_id, String admin_emailid, String admin_password, String admin_name, String admin_role, String admin_status, String admin_created_at) {
         this.admin_id = admin_id;
         this.admin_emailid = admin_emailid;
         this.admin_password = admin_password;
@@ -43,11 +43,11 @@ public class Admin {
         this.admin_created_at = admin_created_at;
     }
 
-    public String getAdmin_id() {
+    public int getAdmin_id() {
         return admin_id;
     }
 
-    public void setAdmin_id(String admin_id) {
+    public void setAdmin_id(int admin_id) {
         this.admin_id = admin_id;
     }
 
