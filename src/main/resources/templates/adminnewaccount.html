@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Administration</title>
@@ -26,7 +26,7 @@
     </div>
 </div>
 <div class="container-fluid" style="margin-top: 0; padding: 0;">
-    <div class="col-lg-2" style="background-color: #ecedf4; height: 100vh;">
+    <div class="col-lg-2" style="background-color: #ecedf4; height: 100px;">
         <div class="admin_sidebar_menu">
             <div>
                 <h3 style="font-family: math">Administration</h3>
@@ -79,7 +79,7 @@
                         <td th:text="${customer.customer_lastname}">Load...</td>
                         <td th:text="${customer.customer_emailid}">Load...</td>
                         <td th:text="${customer.customer_mobile}">Load...</td>
-                        <td><a th:href=""><button type="button" class="btn btn-success">Action</button></a></td>
+                        <td><a th:href="@{/adminnewaccount/{id}(id=${customer.customer_id})}"><button type="button" class="btn btn-success">Action</button></a></td>
                     </tr>
                     </tbody>
                 </table>

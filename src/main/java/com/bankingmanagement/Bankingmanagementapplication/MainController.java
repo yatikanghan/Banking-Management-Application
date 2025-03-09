@@ -1,5 +1,6 @@
 package com.bankingmanagement.Bankingmanagementapplication;
 
+import MyModel.Account;
 import MyModel.Admin;
 import MyModel.Customer;
 import Repository.Customer_Repository;
@@ -11,9 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -95,7 +94,8 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                model.addAttribute("customers", customerService.findallcustomers());
+                List<Customer> customers=customerService.findallcustomers();
+                model.addAttribute("customers", customers);
                 return "adminnewaccount";
             }else {
                 return "redirect:/adminlogin";
@@ -106,13 +106,23 @@ public class MainController {
         }
     }
 
+    @GetMapping("/adminnewaccount/{id}")
+    public String updaterecode(@PathVariable Integer id, Model model) {
+        Customer customer = customerService.findrecodebyid(id);
+        Account account=customerService.findaccountrecodebyid(id);
+        model.addAttribute("account", account);
+        model.addAttribute("customer", customer);
+        return "adminnewaccountdetail";
+    }
+
+
 
 
 //    customer register submit
     @PostMapping("/registeraccount")
     public String registeraccount(Model model, @RequestParam String txtfname, @RequestParam String txtlname, @RequestParam String txtemail , @RequestParam String txtpassword, @RequestParam String txtmobilenumber , @RequestParam String txtaddress, @RequestParam String txtdob, @RequestParam String txtpostcode, @RequestParam String txtactype , @RequestParam String txtcountry) {
 
-        customerService.customer_register(txtfname, txtlname,txtemail, txtpassword, txtmobilenumber, txtaddress, txtdob, txtpostcode, txtcountry);
+        customerService.customer_register(txtfname, txtlname,txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress, txtpostcode, txtcountry);
         Customer customer = new Customer();
         customer = customerService.findrecodebyemail(txtemail);
         String account_number= String.valueOf((Integer.parseInt("1000000000") + Integer.parseInt(String.valueOf(customer.getCustomer_id()))));

@@ -255,6 +255,18 @@
     top: 65px;
     position: absolute;
 }
+.accountconfirmbtn{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.accountconfirmbtn button{
+    background-image: linear-gradient(to right, #3739ff 0%, #6668ef 51%, #9091f4 100%);
+    padding: 10px 100px;
+    border-radius: 6px;
+    border: 0px;
+    font-size: 16px;
+    color: white;
+}
 
 
 

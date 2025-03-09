@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Account {
     @Id
-    String account_id;
+    int account_id;
     @Column(nullable = false)
     int customer_id;
     @Column(nullable = false)
@@ -24,7 +24,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String account_id, int customer_id, String account_number, String account_type, String account_balance, String account_status, String account_created_at) {
+    public Account(int account_id, int customer_id, String account_number, String account_type, String account_balance, String account_status, String account_created_at) {
         this.account_id = account_id;
         this.customer_id = customer_id;
         this.account_number = account_number;
@@ -42,11 +42,11 @@ public class Account {
         this.account_status = account_status;
     }
 
-    public String getAccount_id() {
+    public int getAccount_id() {
         return account_id;
     }
 
-    public void setAccount_id(String account_id) {
+    public void setAccount_id(int account_id) {
         this.account_id = account_id;
     }
 

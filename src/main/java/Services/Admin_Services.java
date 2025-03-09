@@ -1,6 +1,8 @@
 package Services;
 
+import MyModel.Account;
 import MyModel.Admin;
+import MyModel.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +16,9 @@ import java.util.List;
 public class Admin_Services {
     @Autowired
     JdbcTemplate template;
+
+
+
 
     public List<Admin> findAlladmins() {
         String sql = "select admin_id, admin_emailid, admin_password, admin_name, admin_role, admin_status, admin_created_at from Admin";
