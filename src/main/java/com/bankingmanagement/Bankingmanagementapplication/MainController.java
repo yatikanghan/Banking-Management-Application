@@ -5,6 +5,7 @@ import MyModel.Customer;
 import Repository.Customer_Repository;
 import Services.Admin_Services;
 import Services.Customer_Service;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -44,17 +45,20 @@ public class MainController {
 
 //    admin login
     @PostMapping("/adminlogin")
-    public String adminlogin(@RequestParam String adminemailid, @RequestParam String adminpassword, Model model) {
+    public String adminlogin(@RequestParam String adminemailid, @RequestParam String adminpassword, Model model, HttpSession session) {
         model.addAttribute("error", "");
         List<Admin> adminlist=admin_services.findAlladmins();
         String adminid=null;
+        Admin currentadmin=null;
         for (Admin admin : adminlist) {
             if ((admin.getAdmin_emailid().equals(adminemailid)) && (admin.getAdmin_password().equals(adminpassword))) {
                 adminid=String.valueOf(admin.getAdmin_id());
+                currentadmin=admin;
             }
         }
         if (adminid!=null) {
-
+            session.setAttribute("adminid", adminid);
+            session.setAttribute("currentadmin", currentadmin);
             return "redirect:/admindashboard";
 
         }
@@ -65,9 +69,41 @@ public class MainController {
 
     }
     @RequestMapping("/admindashboard")
-    public String admindashboard() {
+    public String admindashboard(HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                return "admindashboard";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
 
-        return "admindashboard";
+    }
+
+    @RequestMapping("/adminlogout")
+    public String adminlogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/adminlogin";
+    }
+
+    @RequestMapping("/adminnewaccount")
+    public String adminnewaccount(HttpSession session, Model model) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                model.addAttribute("customers", customerService.findallcustomers());
+                return "adminnewaccount";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
     }
 
 

@@ -189,6 +189,78 @@
 }
 
 
+
+/*---------------------------- admin dashboard -------------------------------*/
+.admin_header{
+    background-color: #ecedf4;
+}
+.adminmenu{
+}
+.adminmenu a{
+    font-size: 15px;
+    color: #000000;
+    position: relative;
+    top: 20px;
+    padding: 10px 30px;
+}
+.adminsidebar{
+    background-color: #ecedf4;
+
+}
+.admin_sidebar_menu{
+    text-align: center;
+}
+.admin_sidebar_menu div{
+    list-style-type: none;
+    display: block;
+}
+.admin_sidebar_menu div a{
+    display: block;
+    font-size: 18px;
+    color: #000000;
+    padding: 10px 5px;
+
+    font-family: math;
+}
+.admin_sidebar_menu div a:hover{
+    background-color: #e1e8dd;
+    text-decoration: none;
+}
+
+
+.cardview{
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+.lpart{
+    display: inline-block;
+    background-color: #6f4b3d;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.rpart{
+    display: inline-block;
+    color: #ffffff;
+    padding-left: 25px;
+}
+.rpart h3  {
+    margin-top: 20px;
+    top: 13px;
+    font-size: 20px;
+    position: absolute;
+}
+.rpart p{
+    font-size: 30px;
+    top: 65px;
+    position: absolute;
+}
+
+
+
+
+
+
 @media only screen and (max-width: 1200px) {
     .main_banner{
         background-image: url("../images/bankingimage.jpg");

@@ -2,9 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin</title>
+    <title>Administration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <h1>Welcome to Admin Dashbord</h1>
+<div class="admin_header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="logo" style="margin-left: 18px">
+                    <img src="/images/logo.png" alt="" height="50px" style="float: left;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="adminmenu" style="float: right;">
+                    <a href="/adminlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+    <div class="col-lg-2" style="background-color: #ecedf4; height: 100vh;">
+        <div class="admin_sidebar_menu">
+            <div>
+                <h3 style="font-family: math">Administration</h3>
+            </div>
+            <div>
+                <br>
+                <a href="">Dashboard</a>
+
+                <a href="">Account</a>
+
+                <a href="/adminnewaccount">Account Openning</a>
+
+                <a href="">Fixed Deposit</a>
+
+                <a href="">Transfer</a>
+
+                <a href="">Deposit</a>
+
+                <a href="">Withdraw</a>
+
+                <a href="">Contact Us</a>
+
+                <a href="">Admin Profile</a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <br><br>
+    <div class="col-lg-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="cardview" style="background-color:#815346;">
+                        <div class="lpart" style="background-color: #6f4b3d;">
+                            <img src="/images/account.png" alt="" height="100px" style="margin: 20px">
+                        </div>
+                        <div class="rpart">
+                            <h3>Accounts</h3>
+                            <p>70</p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="cardview" style="background-color:#ab1aad;">
+                        <div class="lpart" style="background-color: #931893;">
+                            <img src="/images/poeple_icon.png" alt="" height="100px" style="margin: 20px">
+                        </div>
+                        <div class="rpart">
+                            <h3>Customers</h3>
+                            <p>70</p>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cardview" style="background-color:#00b157;">
+                        <div class="lpart" style="background-color: #009c4b;">
+                            <img src="/images/fd_icon.png" alt="" height="100px" style="margin: 20px">
+                        </div>
+                        <div class="rpart">
+                            <h3>Fixed Deposite</h3>
+                            <p>3</p>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cardview" style="background-color:#ff9201;">
+                        <div class="lpart" style="background-color: #f28100;">
+                            <img src="/images/employee.png" alt="" height="100px" style="margin: 20px">
+                        </div>
+                        <div class="rpart">
+                            <h3>Employee</h3>
+                            <p>25</p>
+                        </div>
+
+
+                    </div>
+                </div>
+<!--                <div class="col-lg-4">-->
+<!--                    <div class="cardview" style="background-color: #78c552;">-->
+<!--                        <div class="lpart" style="background-color: #6aac48;">-->
+<!--                            <img src="/images/poeple_icon.png" alt="" height="100px" style="margin: 20px">-->
+<!--                        </div>-->
+<!--                        <div class="rpart">-->
+<!--                            <h3>Accounts</h3>-->
+<!--                            <p>70</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="col-lg-4">
+                    <div class="cardview" style="background-color:#009af4;">
+                        <div class="lpart" style="background-color: #0186d5;">
+                            <img src="/images/contact_icon.png" alt="" height="100px" style="margin: 20px">
+                        </div>
+                        <div class="rpart">
+                            <h3>Contact Us</h3>
+                            <p>3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

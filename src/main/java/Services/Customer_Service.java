@@ -1,6 +1,7 @@
 package Services;
 
 import MyModel.Account;
+import MyModel.Admin;
 import MyModel.Customer;
 import Repository.Account_Repository;
 import Repository.Customer_Repository;
@@ -10,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class Customer_Service {
@@ -29,6 +31,30 @@ public class Customer_Service {
 //        Account account =new Account(customer_id, account_number, account_type, account_balance, account_status);
 //        accountRepository.save(account);
     }
+
+    public List<Customer> findallcustomers() {
+        String sql = "SELECT customer_id, customer_firstname, customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country from customers;";
+        RowMapper<Customer> rm = new RowMapper<Customer>() {
+            @Override
+            public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
+                Customer customers = new Customer(resultSet.getInt("customer_id"),
+                        resultSet.getString("customer_firstname"),
+                        resultSet.getString("customer_lastname"),
+                        resultSet.getString("customer_emailid"),
+                        resultSet.getString("customer_password"),
+                        resultSet.getString("customer_mobile"),
+                        resultSet.getString("customer_dob"),
+                        resultSet.getString("customer_address"),
+                        resultSet.getString("customer_postcode"),
+                        resultSet.getString("customer_country"));
+
+
+                return customers;
+            }
+        };
+        return template.query(sql, rm);
+    }
+
 
     public Customer findrecodebyemail(String customer_emailid) {
 
