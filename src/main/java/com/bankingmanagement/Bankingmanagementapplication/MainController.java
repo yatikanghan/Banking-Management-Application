@@ -107,16 +107,57 @@ public class MainController {
     }
 
     @GetMapping("/adminnewaccount/{id}")
-    public String updaterecode(@PathVariable Integer id, Model model) {
-        Customer customer = customerService.findrecodebyid(id);
-        Account account=customerService.findaccountrecodebyid(id);
-        model.addAttribute("account", account);
-        model.addAttribute("customer", customer);
-        return "adminnewaccountdetail";
+    public String updaterecode(@PathVariable Integer id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Customer customer = customerService.findrecodebyid(id);
+                Account account=customerService.findaccountrecodebyid(id);
+                model.addAttribute("account", account);
+                model.addAttribute("customer", customer);
+                return "adminnewaccountdetail";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
     }
+//
+////  account admin confirm
+//    @PostMapping("/adminacconfirm")
+//    public String adminacconfirm(@ModelAttribute String txtcustomer_id, @ModelAttribute String txtcustomer_firstname, @ModelAttribute String txtlname, @ModelAttribute String txtemail , @ModelAttribute String txtpassword, @ModelAttribute String txtmobilenumber , @ModelAttribute String txtaddress, @ModelAttribute String txtdob, @ModelAttribute String txtpostcode, @ModelAttribute String txtaccountid ,@ModelAttribute String txtactype , @ModelAttribute String txtcountry, @ModelAttribute String txtbalance, @ModelAttribute String txtacstatus, Model model, HttpSession session) {
+//        customerService.updatecustomer(txtcustomer_id, txtcustomer_firstname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress,txtpostcode, txtcountry);
+//        customerService.updateaccount(txtaccountid, txtactype, txtbalance, txtacstatus);
+//        return "admindashboard";
+//    }
 
 
+@PostMapping("/adminacconfirm")
+public String adminacconfirm(
+        @RequestParam("txtcustomer_id") int txtcustomer_id,
+        @RequestParam("txtcustomer_firstname") String txtcustomer_firstname,
+        @RequestParam("txtlname") String txtlname,
+        @RequestParam("txtemail") String txtemail,
+        @RequestParam("txtpassword") String txtpassword,
+        @RequestParam("txtmobilenumber") String txtmobilenumber,
+        @RequestParam("txtaddress") String txtaddress,
+        @RequestParam("txtdob") String txtdob,
+        @RequestParam("txtpostcode") String txtpostcode,
+        @RequestParam("txtcountry") String txtcountry,
+        @RequestParam("txtaccount_id") int txtaccountid,
+        @RequestParam("txtactype") String txtactype,
+        @RequestParam("txtbalance") double txtbalance,
+        @RequestParam("txtacstatus") String txtacstatus,
+        Model model, HttpSession session) {
 
+    customerService.updatecustomer(String.valueOf(txtcustomer_id), txtcustomer_firstname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress, txtpostcode, txtcountry);
+    customerService.updateaccount(String.valueOf(txtaccountid), txtactype, String.valueOf(txtbalance), txtacstatus);
+
+    return "admindashboard";
+}
 
 //    customer register submit
     @PostMapping("/registeraccount")

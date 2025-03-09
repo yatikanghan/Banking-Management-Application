@@ -60,18 +60,18 @@
   <br><br>
   <div class="col-lg-10">
     <div class="container">
-      <form action="" method="post">
+      <form action="/adminacconfirm" method="post">
       <div class="row">
         <h3>Customer Account Opening Details</h3>
         <br>
 
           <div class="col-lg-6 col-sm-12 col-md-12">
             <div class="form-group">
-              <label for="txtcid">Customer Id :</label>
-              <input type="text" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcid" name="txtcid" disabled>
+              <label for="txtcustomer_id">Customer Id :</label>
+              <input type="number" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcustomer_id" name="txtcustomer_id" required>
               <br>
-              <label for="txtfname">First Name :</label>
-              <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtfname" name="txtfname" placeholder="Enter your first name">
+              <label for="txtcustomer_firstname">First Name :</label>
+              <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtcustomer_firstname" name="txtcustomer_firstname" placeholder="Enter your first name">
               <br>
               <label for="txtemail">Email Address :</label>
               <input type="email" th:value="${customer.getCustomer_emailid()}" class="form-control" id="txtemail" name="txtemail" placeholder="Enter your Email Address">
@@ -110,48 +110,49 @@
           </div>
           <h3>Account Detail</h3>
 
-<!--          <div class="col-lg-6 col-sm-12 col-md-12">-->
-<!--            <div class="form-group">-->
-<!--              <label for="txtaccountid">Account ID :</label>-->
-<!--              <input type="text" th:value="${account.getAccount_id()}" class="form-control" id="txtaccountid" name="txtaccountid" disabled>-->
-<!--              <br>-->
-<!--              <label for="txtcustomerid">Customer ID :</label>-->
-<!--              <input type="text" th:value="${account.getCustomer_id()}" class="form-control" id="txtcustomerid" name="txtcustomerid" disabled>-->
-<!--              <br>-->
-<!--              <label for="txtbalance">Balance :</label>-->
-<!--              <input type="number" th:value="${account.getAccount_balance()}" class="form-control" id="txtbalance" name="txtbalance" placeholder="Enter Account Balance">-->
-<!--              <br>-->
-<!--              <label for="txtaccountopenning">Account Openning Date :</label>-->
-<!--              <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" disabled>-->
-<!--              <br>-->
-<!--              <br>-->
-<!--              <br>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="col-lg-6 col-sm-12 col-md-12">-->
-<!--            <div class="form-group">-->
-<!--              <label for="txtaccountnumber">Account Number :</label>-->
-<!--              <input type="text" th:value="${account.getAccount_number()()}" class="form-control" id="txtaccountnumber" name="txtaccountnumber" disabled>-->
-<!--              <br>-->
-<!--              <label for="txtactype">Account Type :</label>-->
-<!--              <select class="form-control" th:value="${account.getAccount_type()}" id="txtactype" name="txtactype">-->
-<!--                <option value="saving_account">Saving Account</option>-->
-<!--                <option value="ccurrent_account">Current Account</option>-->
-<!--              </select>-->
-<!--                <br>-->
-<!--                <label for="txtacstatus">Account Status :</label>-->
-<!--                <select class="form-control" id="txtacstatus" th:value="${account.getAccount_status()}" name="txtacstatus">-->
-<!--                  <option value="Active">Active</option>-->
-<!--                  <option value="Pending">Pending</option>-->
-<!--                  <option value="Deactive">Deactive</option>-->
-<!--                  <option value="Closed">Closed</option>-->
-<!--                </select>-->
+          <div class="col-lg-6 col-sm-12 col-md-12">
+            <div class="form-group">
+              <label for="txtaccount_id">Account ID :</label>
+              <input type="text" th:value="${account.getAccount_id()}" class="form-control" id="txtaccount_id" name="txtaccount_id">
+              <br>
+              <label for="txtcustomerid">Customer ID :</label>
+              <input type="text" th:value="${account.getCustomer_id()}" class="form-control" id="txtcustomerid" name="txtcustomerid" disabled>
+              <br>
+              <label for="txtbalance">Balance :</label>
+              <input type="number" th:value="${account.getAccount_balance()}" class="form-control" id="txtbalance" name="txtbalance" placeholder="Enter Account Balance">
+              <br>
+              <label for="txtaccountopenning">Account Openning Date :</label>
+              <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" disabled>
+              <br>
+              <br>
+              <br>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12 col-md-12">
+            <div class="form-group">
+              <label for="txtaccountnumber">Account Number :</label>
+              <input type="text" th:value="${account.getAccount_number()}" class="form-control" id="txtaccountnumber" name="txtaccountnumber" disabled>
+              <br>
+              <label for="txtactype">Account Type :</label>
+              <select class="form-control" id="txtactype" name="txtactype">
+                <option value="saving_account" th:selected="${account.getAccount_type() == 'saving_account'}">Saving Account</option>
+                <option value="current_account" th:selected="${account.getAccount_type() == 'current_account'}">Current Account</option>
+              </select>
 
-<!--                  <br>-->
-<!--              <br>-->
-<!--              <br>-->
-<!--            </div>-->
-<!--          </div>-->
+              <br>
+                <label for="txtacstatus">Account Status :</label>
+              <select class="form-control" id="txtacstatus" name="txtacstatus">
+                <option value="Active" th:selected="${account.getAccount_status() == 'Active'}">Active</option>
+                <option value="Pending" th:selected="${account.getAccount_status() == 'Pending'}">Pending</option>
+                <option value="Deactive" th:selected="${account.getAccount_status() == 'Deactive'}">Deactive</option>
+                <option value="Closed" th:selected="${account.getAccount_status() == 'Closed'}">Closed</option>
+              </select>
+
+                  <br>
+              <br>
+              <br>
+            </div>
+          </div>
           <br>
           <br>
           <br>

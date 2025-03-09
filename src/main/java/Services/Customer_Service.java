@@ -84,7 +84,7 @@ public class Customer_Service {
 
     public Account findaccountrecodebyid(int account_id) {
 
-        String sql = "SELECT * FROM account WHERE account_id = ?";
+        String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_id = ?";
 
         return template.queryForObject(sql, new Object[]{account_id}, new RowMapper<Account>() {
             @Override
@@ -104,6 +104,17 @@ public class Customer_Service {
         });
 
     }
+
+
+//    update customer
+public int updatecustomer(String customer_id, String customer_firstname, String customer_lastname, String customer_emailid, String customer_password, String customer_mobile, String customer_dob, String customer_address, String customer_postcode, String customer_country) {
+    String sql = "UPDATE customers SET customer_firstname=(?), customer_lastname=(?), customer_emailid=(?), customer_password=(?), customer_mobile=(?), customer_dob=(?), customer_address=(?),customer_postcode=(?),customer_country=(?) WHERE customer_id=(?)";
+    return template.update(sql, customer_firstname, customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country, customer_id);
+}
+public int updateaccount(String account_id, String account_type, String account_balance, String account_status){
+    String sql = "UPDATE account SET account_type=(?), account_balance=(?), account_status=(?) WHERE account_id=(?)";
+    return template.update(sql, account_type, account_balance, account_status, account_id);
+}
 
 
     public Customer findrecodebyemail(String customer_emailid) {
