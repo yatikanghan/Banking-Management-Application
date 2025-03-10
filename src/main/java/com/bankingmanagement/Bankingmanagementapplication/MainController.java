@@ -1,6 +1,7 @@
 package com.bankingmanagement.Bankingmanagementapplication;
 
 import MyModel.Account;
+import MyModel.AccountDetailView;
 import MyModel.Admin;
 import MyModel.Customer;
 import Repository.Customer_Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -126,15 +128,6 @@ public class MainController {
 
     }
 //
-////  account admin confirm
-//    @PostMapping("/adminacconfirm")
-//    public String adminacconfirm(@ModelAttribute String txtcustomer_id, @ModelAttribute String txtcustomer_firstname, @ModelAttribute String txtlname, @ModelAttribute String txtemail , @ModelAttribute String txtpassword, @ModelAttribute String txtmobilenumber , @ModelAttribute String txtaddress, @ModelAttribute String txtdob, @ModelAttribute String txtpostcode, @ModelAttribute String txtaccountid ,@ModelAttribute String txtactype , @ModelAttribute String txtcountry, @ModelAttribute String txtbalance, @ModelAttribute String txtacstatus, Model model, HttpSession session) {
-//        customerService.updatecustomer(txtcustomer_id, txtcustomer_firstname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress,txtpostcode, txtcountry);
-//        customerService.updateaccount(txtaccountid, txtactype, txtbalance, txtacstatus);
-//        return "admindashboard";
-//    }
-
-
 @PostMapping("/adminacconfirm")
 public String adminacconfirm(
         @RequestParam("txtcustomer_id") int txtcustomer_id,
@@ -167,7 +160,13 @@ public String adminacconfirm(
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
                 List<Customer> customers=customerService.findallcustomers();
-                model.addAttribute("customers", customers);
+                List<AccountDetailView> accountdetailviewslist=new ArrayList<AccountDetailView>();
+                for (Customer customer : customers) {
+                    Account account=customerService.findaccountrecodebyid(customer.getCustomer_id());
+                    accountdetailviewslist.add(new AccountDetailView(customer.getCustomer_id(), customer, account.getAccount_id(), account.getAccount_number(), account.getAccount_type(), account.getAccount_balance(), account.getAccount_status(), account.getAccount_created_at()));
+                }
+
+                model.addAttribute("accountdetailviewslist", accountdetailviewslist);
                 return "adminmanageaccount";
             }else {
                 return "redirect:/adminlogin";
@@ -176,6 +175,26 @@ public String adminacconfirm(
         catch(NullPointerException e) {
             return "redirect:/adminlogin";
         }
+    }
+
+    @GetMapping("/adminmanageaccount/{id}")
+    public String adminmanageaccountdetail(@PathVariable Integer id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Customer customer = customerService.findrecodebyid(id);
+                Account account=customerService.findaccountrecodebyid(id);
+                model.addAttribute("account", account);
+                model.addAttribute("customer", customer);
+                return "adminmanageaccountdetail";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
     }
 
 //    customer register submit

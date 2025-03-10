@@ -65,21 +65,21 @@
                 <br>
                 <table class="table table-bordered">
                     <thead>
-                    <th>Customer ID</th>
+                    <th>Account Number</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Mobile  Number</th>
+                    <th>Mobile Number</th>
                     <th>Action</th>
                     </thead>
                     <tbody>
-                    <tr th:each = "customer: ${customers}">
-                        <td th:text="${customer.customer_id}">Load...</td>
-                        <td th:text="${customer.customer_firstname}">Load...</td>
-                        <td th:text="${customer.customer_lastname}">Load...</td>
-                        <td th:text="${customer.customer_emailid}">Load...</td>
-                        <td th:text="${customer.customer_mobile}">Load...</td>
-                        <td><a th:href="@{/adminnewaccount/{id}(id=${customer.customer_id})}"><button type="button" class="btn btn-success">Action</button></a></td>
+                    <tr th:each = "accountdetailviewslist: ${accountdetailviewslist}">
+                        <td th:text="${accountdetailviewslist.account_number}">Load...</td>
+                        <td th:text="${accountdetailviewslist.customer.customer_firstname}">Load...</td>
+                        <td th:text="${accountdetailviewslist.customer.customer_lastname}">Load...</td>
+                        <td th:text="${accountdetailviewslist.customer.customer_emailid}">Load...</td>
+                        <td th:text="${accountdetailviewslist.customer.customer_mobile}">Load...</td>
+                        <td><a th:href="@{/adminmanageaccount/{id}(id=${accountdetailviewslist.customer_id})}"><button type="button" class="btn btn-success">Update</button></a></td>
                     </tr>
                     </tbody>
                 </table>

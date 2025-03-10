@@ -82,6 +82,28 @@ public class Customer_Service {
     }
 
 
+    public List<Account> findallaccounts() {
+        String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account";
+
+        RowMapper<Account> thisrm = new RowMapper<Account>() {
+            @Override
+            public Account mapRow(ResultSet resultSet, int i) throws SQLException {
+                Account account = new Account();
+                account.setAccount_id(resultSet.getInt("account_id"));
+                account.setCustomer_id(resultSet.getInt("customer_id"));
+                account.setAccount_number(resultSet.getString("account_number"));
+                account.setAccount_type(resultSet.getString("account_type"));
+                account.setAccount_balance(resultSet.getString("account_balance"));
+                account.setAccount_status(resultSet.getString("account_status"));
+                account.setAccount_created_at(resultSet.getString("account_created_at"));
+
+
+                return account;
+            }
+        };
+        return template.query(sql, thisrm);
+    }
+
     public Account findaccountrecodebyid(int account_id) {
 
         String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_id = ?";
