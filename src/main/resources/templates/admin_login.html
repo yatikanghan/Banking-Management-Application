@@ -54,10 +54,12 @@
                 <label for="adminpassword">Password</label>
                 <input type="password" class="form-control" id="adminpassword" name="adminpassword" placeholder="Password">
                 </div>
+              <br><br>
+              <p th:text="${error}"></p>
+              <br><br>
                 <div class="logincbtn">
                   <button type="submit">Login</button>
-                  <br><br>
-                  <p th:text="${error}"></p>
+
 
                 </div>
 

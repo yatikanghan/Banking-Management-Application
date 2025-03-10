@@ -42,19 +42,21 @@
                 <div class="mainloginpage">
                     <div class="loginbox">
                         <h3>Login</h3><br>
-                        <form action="#" method="post">
+                        <form action="/customerlogin" method="post">
                             <div class="form-group">
-                                <label for="emailaddress">Email address</label>
-                                <input type="email" class="form-control" id="emailaddress" placeholder="Email Address">
+                                <label for="customeremailid">Email address</label>
+                                <input type="email" class="form-control" id="customeremailid" name="customeremailid" placeholder="Email Address">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <label for="customerpassword">Password</label>
+                                <input type="password" class="form-control" id="customerpassword" name="customerpassword" placeholder="Password">
                                 <div class="forgotpassword">
                                     <a href="#">Forgot Password?</a>
                                 </div>
                                 <div class="logincbtn">
                                     <button type="submit">Login</button>
+                                    <br><br>
+                                    <p th:text="${errormsg}"></p>
                                 </div>
                                 <div class="signupcbtn">
                                     <a href="/register">Open A New Account</a>

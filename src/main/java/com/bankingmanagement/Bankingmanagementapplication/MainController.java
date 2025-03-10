@@ -32,7 +32,11 @@ public class MainController {
 
     @RequestMapping("/login")
     public String login() {
-        return "/customerlogin";
+        return "customerlogin";
+    }
+    @RequestMapping("/customerloginpage")
+    public String customerloginpage() {
+        return "customerlogin";
     }
     @RequestMapping("/register")
     public String register() {
@@ -96,7 +100,14 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                List<Customer> customers=customerService.findallcustomers();
+                List<Account> allaccountlist=customerService.findallaccounts();
+                List<Customer> customers=new ArrayList<>();
+                for (Account account : allaccountlist) {
+                    if (account.getAccount_status().equals("Pending")) {
+                        customers.add(customerService.findrecodebyid(account.getCustomer_id()));
+                    }
+                }
+
                 model.addAttribute("customers", customers);
                 return "adminnewaccount";
             }else {
@@ -207,6 +218,47 @@ public String adminacconfirm(
         String account_number= String.valueOf((Integer.parseInt("1000000000") + Integer.parseInt(String.valueOf(customer.getCustomer_id()))));
         customerService.add_account(customer.getCustomer_id(), account_number, txtactype, "0", "Pending");
         return "redirect:/login";
+    }
+
+//    customer login submit
+    @PostMapping("/customerlogin")
+    public String customerlogin(Model model, HttpSession session, @RequestParam String customeremailid, @RequestParam String customerpassword) {
+        model.addAttribute("errormsg", "");
+        List<Customer> customerlist=customerService.findallcustomers();
+        String custid=null;
+        Customer currentcustomer=null;
+        for (Customer customer : customerlist) {
+            if ((customer.getCustomer_emailid().equals(customeremailid)) && (customer.getCustomer_password().equals(customerpassword))) {
+                custid=String.valueOf(customer.getCustomer_id());
+                currentcustomer=customer;
+            }
+        }
+        if (custid!=null) {
+            session.setAttribute("custid", custid);
+            session.setAttribute("currentcustomer", currentcustomer);
+            return "redirect:/customerdashboard";
+
+        }
+        else {
+            model.addAttribute("errormsg", "Invalid email or password");
+            return "customerlogin";
+        }
+    }
+
+    @RequestMapping("/customerdashboard")
+    public String customerdashboard(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+
+                return "customerdashboard";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
     }
 
 }
