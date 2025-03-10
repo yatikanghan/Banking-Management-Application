@@ -159,6 +159,25 @@ public String adminacconfirm(
     return "admindashboard";
 }
 
+
+//manage admin account
+    @RequestMapping("/adminmanageaccount")
+    public String adminmanageaccount(HttpSession session, Model model) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                List<Customer> customers=customerService.findallcustomers();
+                model.addAttribute("customers", customers);
+                return "adminmanageaccount";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
 //    customer register submit
     @PostMapping("/registeraccount")
     public String registeraccount(Model model, @RequestParam String txtfname, @RequestParam String txtlname, @RequestParam String txtemail , @RequestParam String txtpassword, @RequestParam String txtmobilenumber , @RequestParam String txtaddress, @RequestParam String txtdob, @RequestParam String txtpostcode, @RequestParam String txtactype , @RequestParam String txtcountry) {
