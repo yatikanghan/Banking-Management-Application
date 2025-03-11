@@ -11,22 +11,22 @@
 </head>
 <body>
 <header>
-  <div class="header">
+  <div class="header" style="background-color: #191919;">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-sm-12 col-md-12">
           <div class="logo">
-            <img src="/images/logo.png" alt="logo" height="50px">
+            <img src="/images/white_logo.png" alt="logo" height="50px">
           </div>
         </div>
         <div class="menucontainer col-lg-6 col-sm-12 col-md-12">
           <div class="menu navbar-nav">
 
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Support</a></li>
-              <li><a href="#"><button class="header_loginbtn btn-primary">LogIn</button></a></li>
+              <li><a href="/" style="color: white;">Home</a></li>
+              <li><a href="#" style="color: white;">About</a></li>
+              <li><a href="#" style="color: white;">Support</a></li>
+              <li><a href="#" style="color: white;"><button class="header_loginbtn btn-primary">LogIn</button></a></li>
             </ul>
 
           </div>
@@ -54,10 +54,10 @@
                 <label for="adminpassword">Password</label>
                 <input type="password" class="form-control" id="adminpassword" name="adminpassword" placeholder="Password">
                 </div>
-              <br><br>
-              <p th:text="${error}"></p>
-              <br><br>
+              <br>
+
                 <div class="logincbtn">
+                  <p th:text="${error}"></p><br>
                   <button type="submit">Login</button>
 
 
