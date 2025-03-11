@@ -68,7 +68,7 @@
           <div class="col-lg-6 col-sm-12 col-md-12">
             <div class="form-group">
               <label for="txtcustomer_id">Customer Id :</label>
-              <input type="number" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcustomer_id" name="txtcustomer_id" required>
+              <input type="number" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcustomer_id" name="txtcustomer_id" readonly>
               <br>
               <label for="txtcustomer_firstname">First Name :</label>
               <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtcustomer_firstname" name="txtcustomer_firstname" placeholder="Enter your first name">
@@ -113,16 +113,16 @@
           <div class="col-lg-6 col-sm-12 col-md-12">
             <div class="form-group">
               <label for="txtaccount_id">Account ID :</label>
-              <input type="text" th:value="${account.getAccount_id()}" class="form-control" id="txtaccount_id" name="txtaccount_id">
+              <input type="text" th:value="${account.getAccount_id()}" class="form-control" id="txtaccount_id" name="txtaccount_id" readonly>
               <br>
               <label for="txtcustomerid">Customer ID :</label>
-              <input type="text" th:value="${account.getCustomer_id()}" class="form-control" id="txtcustomerid" name="txtcustomerid" disabled>
+              <input type="text" th:value="${account.getCustomer_id()}" class="form-control" id="txtcustomerid" name="txtcustomerid" readonly>
               <br>
               <label for="txtbalance">Balance :</label>
               <input type="number" th:value="${account.getAccount_balance()}" class="form-control" id="txtbalance" name="txtbalance" placeholder="Enter Account Balance">
               <br>
               <label for="txtaccountopenning">Account Openning Date :</label>
-              <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" disabled>
+              <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" readonly>
               <br>
               <br>
               <br>

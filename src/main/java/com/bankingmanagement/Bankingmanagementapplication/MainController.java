@@ -207,6 +207,13 @@ public String adminacconfirm(
         }
 
     }
+    //    admin support
+    @RequestMapping("/adminsupport")
+    public String adminsupport(Model model, HttpSession session) {
+        return "adminsupport";
+    }
+
+
 
 //    customer register submit
     @PostMapping("/registeraccount")
@@ -225,6 +232,8 @@ public String adminacconfirm(
     public String customerlogin(Model model, HttpSession session, @RequestParam String customeremailid, @RequestParam String customerpassword) {
         model.addAttribute("errormsg", "");
         List<Customer> customerlist=customerService.findallcustomers();
+        List<Account> accountlist=customerService.findallaccounts();
+        Account currentaccount=null;
         String custid=null;
         Customer currentcustomer=null;
         for (Customer customer : customerlist) {
@@ -233,10 +242,21 @@ public String adminacconfirm(
                 currentcustomer=customer;
             }
         }
+        for (Account account : accountlist) {
+            if (custid.equals(String.valueOf(account.getCustomer_id()))) {
+                currentaccount=account;
+            }
+        }
         if (custid!=null) {
-            session.setAttribute("custid", custid);
-            session.setAttribute("currentcustomer", currentcustomer);
-            return "redirect:/customerdashboard";
+            if (currentaccount.getAccount_status().equals("Active")) {
+                session.setAttribute("custid", custid);
+                session.setAttribute("currentcustomer", currentcustomer);
+                return "redirect:/customerdashboard";
+            }
+            else{
+                return "redirect:/customerpendingpage";
+
+            }
 
         }
         else {
@@ -248,10 +268,91 @@ public String adminacconfirm(
     @RequestMapping("/customerdashboard")
     public String customerdashboard(Model model, HttpSession session) {
         try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer customer= (Customer) session.getAttribute("currentcustomer");
+                model.addAttribute("customer", customer);
+                model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
                 return "customerdashboard";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+    @RequestMapping("/customerlogout")
+    public String customerlogout(HttpSession session) {
+//        session.removeAttribute("custid");
+//        session.removeAttribute("currentcustomer");
+        session.invalidate();
+        return "redirect:/customerloginpage";
+    }
+
+
+    @RequestMapping("/customerpendingpage")
+    public String customerpendingpage(Model model, HttpSession session) {
+        return "customerpendingpage";
+    }
+
+
+    @RequestMapping("/customersupport")
+    public String customersupport(Model model, HttpSession session) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer customer= (Customer) session.getAttribute("currentcustomer");
+                model.addAttribute("customer", customer);
+                return "customersupport";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+    @RequestMapping("/customeraddsupport")
+    public String customeraddsupport(Model model, HttpSession session) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer customer= (Customer) session.getAttribute("currentcustomer");
+                model.addAttribute("customer", customer);
+                return "customeraddsupport";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+    @PostMapping("/customeraddsupportinsert")
+    public String customeraddsupport(Model model, HttpSession session, @RequestParam String supportsubjectname, @RequestParam String supportsubjectdesc) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer customer= (Customer) session.getAttribute("currentcustomer");
+                model.addAttribute("customer", customer);
+                List<Account> accountlist=customerService.findallaccounts();
+                Account currentaccount=null;
+                for (Account account : accountlist) {
+                    if (custid.equals(String.valueOf(account.getCustomer_id()))) {
+                        currentaccount=account;
+                    }
+                }
+                model.addAttribute("account", currentaccount);
+                model.addAttribute("customer", customer);
+
+                customerService.addcustomersupport(customer.getCustomer_id(),currentaccount.getAccount_id(), supportsubjectname, supportsubjectdesc,"Pending");
+
+
+                return "customersupport";
             }else {
                 return "redirect:/customerloginpage";
             }

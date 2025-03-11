@@ -128,6 +128,12 @@ public class Customer_Service {
     }
 
 
+    public int addcustomersupport(int customer_id, int account_id, String support_title,String support_desc, String support_status) {
+        String sql = "INSERT INTO support (customer_id,account_id,support_title,support_desc,support_status) values(?,?,?,?,?)";
+        return template.update(sql, customer_id, account_id, support_title,support_desc, support_status);
+    }
+
+
 //    update customer
 public int updatecustomer(String customer_id, String customer_firstname, String customer_lastname, String customer_emailid, String customer_password, String customer_mobile, String customer_dob, String customer_address, String customer_postcode, String customer_country) {
     String sql = "UPDATE customers SET customer_firstname=(?), customer_lastname=(?), customer_emailid=(?), customer_password=(?), customer_mobile=(?), customer_dob=(?), customer_address=(?),customer_postcode=(?),customer_country=(?) WHERE customer_id=(?)";

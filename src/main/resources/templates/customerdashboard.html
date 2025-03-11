@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Dashboard</title>
+    <title>FundLab</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 <div class="admin_header">
@@ -15,7 +19,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="adminmenu" style="float: right;">
-                    <a href="/adminlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+                    <a href="/customerlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
                 </div>
             </div>
         </div>
@@ -24,28 +28,21 @@
 <div class="container-fluid" style="margin-top: 0; padding: 0;">
     <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
         <div class="admin_sidebar_menu">
-            <div>
-                <h3 style="font-family: math; color: white">Administration</h3>
-            </div>
+
             <div>
                 <br>
-                <a href="">Dashboard</a>
+                <a href="/customerdashboard">Dashboard</a>
 
-                <a href="/adminmanageaccount">Account</a>
+                <a href="">Transfer Money</a>
 
-                <a href="/adminnewaccount">Account Openning</a>
+
+                <a href="">Transaction History</a>
 
                 <a href="">Fixed Deposit</a>
 
-                <a href="">Transfer</a>
+                <a href="/customersupport">Customer Support</a>
 
-                <a href="">Deposit</a>
-
-                <a href="">Withdraw</a>
-
-                <a href="">Contact Us</a>
-
-                <a href="">Admin Profile</a>
+                <a href="">Profile</a>
 
 
             </div>
@@ -53,5 +50,16 @@
         </div>
 
     </div>
+    <br><br>
+    <div class="col-lg-10">
+        <div class="container">
+            <div class="row">
+                <div class="customergreet">
+                    <h2>Welcome, </h2><h2 th:text="${customername}"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

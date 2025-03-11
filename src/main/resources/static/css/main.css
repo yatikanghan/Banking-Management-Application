@@ -269,6 +269,31 @@
     color: white;
 }
 
+/*customerdashboard  */
+
+.customergreet h2{
+    font-family: math;
+    font-weight: 700;
+    line-height: 18px;
+}
+.maincustomerpendingpagebody{
+    text-align: center;
+}
+.supportaddbtn{
+    text-align: right;
+}
+.supportaddbtn button{
+    padding: 10px 60px;
+}
+
+.pendingbox{
+    padding: 80px;
+}
+
+
+
+
+
 
 
 
@@ -287,6 +312,7 @@
     }
     .menu ul li{
         display: block;
+        color: #ffffff;
     }
     .logo{
         text-align: center;

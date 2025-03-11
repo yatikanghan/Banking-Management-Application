@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FundLab</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="admin_header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="logo" style="margin-left: 18px">
+          <img src="/images/white_logo.png" alt="" height="50px" style="float: left;">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="adminmenu" style="float: right;">
+          <a href="/customerlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+  <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
+    <div class="admin_sidebar_menu">
+
+      <div>
+        <br>
+        <a href="/customerdashboard">Dashboard</a>
+
+        <a href="">Transfer Money</a>
+
+
+        <a href="">Transaction History</a>
+
+        <a href="">Fixed Deposit</a>
+
+        <a href="">Customer Support</a>
+
+        <a href="">Profile</a>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <br><br>
+  <div class="col-lg-10">
+    <div class="container" style="margin-top: 0">
+      <div class="stheader"><h3><b>Customer Support</b></h3></div>
+      <br><br>
+      <form action="/customeraddsupportinsert" method="post">
+        <div class="form-group">
+          <label for="supportsubjectname">Subject :</label>
+          <input type="text" class="form-control" id="supportsubjectname" name="supportsubjectname" placeholder="Enter your subject">
+        </div>
+        <div class="form-group">
+          <label for="supportsubjectdesc">Description :</label>
+          <textarea name="supportsubjectdesc" id="supportsubjectdesc" rows="10" style="width:100%"></textarea>
+        </div>
+        <br>
+        <div class="supportaddbtn">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

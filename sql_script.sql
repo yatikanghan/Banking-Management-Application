@@ -36,6 +36,22 @@ admin_status varchar(50) not null,
 admin_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+create table support(
+support_id int auto_increment primary key,
+customer_id int,
+account_id int,
+support_title varchar(60) not null,
+support_desc varchar(500) not null,
+support_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+admin_id int,
+support_status varchar(50) not null,
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+FOREIGN KEY (account_id) REFERENCES account(account_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+);
+
+INSERT INTO support (customer_id,account_id,support_title,support_desc,support_status)
+values();
 
 Insert into admin (admin_emailid,admin_password,admin_name,admin_role,admin_status) values("admin@gmail.com","admin123","Yatik Anghan","Admin","Active");
 
@@ -49,6 +65,7 @@ select * from customers;
 
 
 update account set account_status="Pending" where account_id=1;
+select * from customers;
 select * from account;
 select * from admin;
 
