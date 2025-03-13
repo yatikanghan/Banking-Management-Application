@@ -1,4 +1,4 @@
-/*package com.bankingmanagement.Bankingmanagementapplication;
+package com.bankingmanagement.Bankingmanagementapplication;
 
 import MyModel.*;
 import Repository.Customer_Repository;
@@ -773,4 +773,4 @@ public String adminacconfirm(
     }
 
 
-}*/
+}
