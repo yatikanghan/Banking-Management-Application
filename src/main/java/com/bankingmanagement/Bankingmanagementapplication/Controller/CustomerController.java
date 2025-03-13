@@ -51,6 +51,27 @@ public class CustomerController {
             return "customerlogin";
         }
     }
+    @GetMapping("/customerdashboard")
+    public String customerDashboard(HttpSession session) {
+        try {
+            String custid = session.getAttribute("custid").toString();
+            if (custid != null) {
+                return "customerdashboard";
+            } else {
+                return "redirect:/customerlogin";
+            }
+        } catch (NullPointerException e) {
+            return "redirect:/customerlogin";
+        }
+    }
 
+    @PostMapping("/register")
+    public String registerAccount(Model model, @RequestParam String txtfname, @RequestParam String txtlname, @RequestParam String txtemail, @RequestParam String txtpassword, @RequestParam String txtmobilenumber, @RequestParam String txtaddress, @RequestParam String txtdob, @RequestParam String txtpostcode, @RequestParam String txtactype, @RequestParam String txtcountry) {
+        customerService.customer_register(txtfname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress, txtpostcode, txtcountry);
+        Customer customer = customerService.findrecodebyemail(txtemail);
+        String account_number = String.valueOf((Integer.parseInt("1000000000") + Integer.parseInt(String.valueOf(customer.getCustomer_id()))));
+        customerService.add_account(customer.getCustomer_id(), account_number, txtactype, "0", "Pending");
+        return "redirect:/customerlogin";
+    }
 
 }

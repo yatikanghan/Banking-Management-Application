@@ -133,5 +133,46 @@ public class AdminController {
 
         return "admindashboard";
     }
+    @RequestMapping("/adminmanageaccount")
+    public String adminmanageaccount(HttpSession session, Model model) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                List<Customer> customers=customerService.findallcustomers();
+                List<AccountDetailView> accountdetailviewslist=new ArrayList<AccountDetailView>();
+                for (Customer customer : customers) {
+                    Account account=customerService.findaccountrecodebyid(customer.getCustomer_id());
+                    accountdetailviewslist.add(new AccountDetailView(customer.getCustomer_id(), customer, account.getAccount_id(), account.getAccount_number(), account.getAccount_type(), account.getAccount_balance(), account.getAccount_status(), account.getAccount_created_at()));
+                }
 
+                model.addAttribute("accountdetailviewslist", accountdetailviewslist);
+                return "adminmanageaccount";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+    @GetMapping("/adminmanageaccount/{id}")
+    public String adminmanageaccountdetail(@PathVariable Integer id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Customer customer = customerService.findrecodebyid(id);
+                Account account=customerService.findaccountrecodebyid(id);
+                model.addAttribute("account", account);
+                model.addAttribute("customer", customer);
+                return "adminmanageaccountdetail";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
 }
