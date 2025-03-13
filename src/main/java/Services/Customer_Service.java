@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -127,6 +128,50 @@ public class Customer_Service {
         });
 
     }
+    public Account findaccountrecodebyacnumber(String account_number) {
+
+//        String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_number = ?";
+//
+//        return template.queryForObject(sql, new Object[]{account_number}, new RowMapper<Account>() {
+//            @Override
+//            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                Account account = new Account();
+//                account.setAccount_id(rs.getInt("account_id"));
+//                account.setCustomer_id(rs.getInt("customer_id"));
+//                account.setAccount_number(rs.getString("account_number"));
+//                account.setAccount_type(rs.getString("account_type"));
+//                account.setAccount_balance(rs.getString("account_balance"));
+//                account.setAccount_status(rs.getString("account_status"));
+//                account.setAccount_created_at(rs.getString("account_created_at"));
+//
+//
+//                return account;
+//            }
+//        });
+
+        String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_number = ?";
+
+        List<Account> accounts = template.query(sql, new Object[]{account_number}, new RowMapper<Account>() {
+            @Override
+            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Account account = new Account();
+                account.setAccount_id(rs.getInt("account_id"));
+                account.setCustomer_id(rs.getInt("customer_id"));
+                account.setAccount_number(rs.getString("account_number"));
+                account.setAccount_type(rs.getString("account_type"));
+                account.setAccount_balance(rs.getString("account_balance"));
+                account.setAccount_status(rs.getString("account_status"));
+                account.setAccount_created_at(rs.getString("account_created_at"));
+                return account;
+            }
+        });
+
+        if (accounts.isEmpty()) {
+            return null; // No account found, return null
+        }
+        return accounts.get(0);
+
+    }
 
     public Account findaccountrecodebycustomerid(int customer_id) {
 
@@ -200,7 +245,62 @@ public int updateaccount(String account_id, String account_type, String account_
 
     }
 
+//    deposit
+public int admindepositmoney(Account account, String receiver_account, Double transaction_amount, String transaction_type, String transaction_remark) {
+    double accountcurrentbalance = Double.parseDouble(account.getAccount_balance());
+    final Double updatedbalance = accountcurrentbalance + transaction_amount;
+//    gen transectionid
+    long timestamp = Instant.now().toEpochMilli();
+    String transactionId = String.valueOf(timestamp);
 
+    String sql = "INSERT INTO transactions (transaction_id, receiver_account, transaction_amount, transaction_type, transaction_remark) VALUES(?,?,?,?,?)";
+    changeaccountbalance(account, updatedbalance);
+
+    return template.update(sql, transactionId, receiver_account, transaction_amount, transaction_type, transaction_remark);
+}
+
+// withdraw
+    public int adminwithdrawmoney(Account account, String sender_account, Double transaction_amount, String transaction_type, String transaction_remark) {
+        double accountcurrentbalance = Double.parseDouble(account.getAccount_balance());
+        final Double updatedbalance = accountcurrentbalance - transaction_amount;
+    //    gen transectionid
+        long timestamp = Instant.now().toEpochMilli();
+        String transactionId = String.valueOf(timestamp);
+
+        String sql = "INSERT INTO transactions (transaction_id, sender_account, transaction_amount, transaction_type, transaction_remark) VALUES(?,?,?,?,?)";
+        changeaccountbalance(account, updatedbalance);
+
+        return template.update(sql, transactionId, sender_account, transaction_amount, transaction_type, transaction_remark);
+    }
+
+
+    public int admintransfermoney(Account senderaccount, Account receiveraccount, String sender_account, String receiver_account, Double transaction_amount, String transaction_type, String transaction_remark) {
+        double senderaccountcurrentbalance = Double.parseDouble(senderaccount.getAccount_balance());
+        double receiveraccountcurrentbalance = Double.parseDouble(receiveraccount.getAccount_balance());
+        final Double senderaccountupdatedbalance = senderaccountcurrentbalance - transaction_amount;
+        final Double receiveraccountupdatedbalance = receiveraccountcurrentbalance + transaction_amount;
+        if (senderaccountupdatedbalance >=1){
+            //    gen transectionid
+            long timestamp = Instant.now().toEpochMilli();
+            String transactionId = String.valueOf(timestamp);
+
+            String sql = "INSERT INTO transactions (transaction_id, sender_account, receiver_account, transaction_amount, transaction_type, transaction_remark) VALUES(?,?,?,?,?,?)";
+            changeaccountbalance(senderaccount, senderaccountupdatedbalance);
+            changeaccountbalance(receiveraccount, receiveraccountupdatedbalance);
+
+            return template.update(sql, transactionId, sender_account, receiver_account, transaction_amount, transaction_type, transaction_remark);
+        }
+        else {
+            return 0;
+        }
+
+    }
+
+//    change balance
+    public int changeaccountbalance(Account account, Double updatedbalance) {
+        String sql = "UPDATE account SET account_balance=(?) WHERE account_id=(?)";
+        return template.update(sql, updatedbalance, account.getAccount_id());
+    }
 
 //    support
 public List<Support> findAllSupport() {

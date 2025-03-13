@@ -95,12 +95,132 @@ public class MainController {
 
     // admin debit
     @PostMapping("/admindebitamount")
-    public String admindebit(Model model, @RequestParam String txtaccountnumber, @RequestParam String txtamount, @RequestParam String txtremark) {
+    public String admindebitamount(Model model, HttpSession session, @RequestParam String txtaccountnumber, @RequestParam String txtamount, @RequestParam String txtremark) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                try {
+                    Account raccount=customerService.findaccountrecodebyacnumber(txtaccountnumber);
+                    if (raccount!=null) {
+                        model.addAttribute("acnotfound", "");
+                        customerService.admindepositmoney(raccount, String.valueOf(raccount.getAccount_id()), Double.parseDouble(txtamount), "Deposit", txtremark);
+                    }
+                    else {
 
-        return "admindebit";
+                        model.addAttribute("acnotfound", "Account not found");
+                        return "admindebit";
+                    }
+
+                }
+                catch (Exception e) {
+                    return e.getMessage();
+                }
+                return "redirect:/admindashboard";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
     }
 
+//admin withdraw
+    @RequestMapping("/adminwithdraw")
+    public String adminwithdraw(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                return "adminwithdraw";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
 
+    // admin debit
+    @PostMapping("/adminwithdrawamount")
+    public String adminwithdrawamount(Model model, HttpSession session, @RequestParam String txtaccountnumber, @RequestParam String txtamount, @RequestParam String txtremark) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                try {
+                    Account raccount=customerService.findaccountrecodebyacnumber(txtaccountnumber);
+                    if (raccount!=null) {
+                        model.addAttribute("acnotfound", "");
+                        customerService.adminwithdrawmoney(raccount, String.valueOf(raccount.getAccount_id()), Double.parseDouble(txtamount), "Withdraw", txtremark);
+                    }
+                    else {
+
+                        model.addAttribute("acnotfound", "Account not found");
+                        return "admindebit";
+                    }
+
+                }
+                catch (Exception e) {
+                    return e.getMessage();
+                }
+                return "redirect:/admindashboard";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+    @RequestMapping("/admintransfer")
+    public String admintransfer(Model model, HttpSession session) {
+        return "admintransfer";
+    }
+
+//    admin transfer money
+    @PostMapping("/admintrasfermoney")
+    public String admintrasfermoney(Model model, HttpSession session, @RequestParam String txtsenderaccount, @RequestParam String txtreceiveraccount, @RequestParam String txtamount, @RequestParam String txtremark) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                try {
+                    Account senderaccount=customerService.findaccountrecodebyacnumber(txtsenderaccount);
+                    Account receiveraccount=customerService.findaccountrecodebyacnumber(txtreceiveraccount);
+                    if (senderaccount!=null) {
+                        if (receiveraccount!=null) {
+                            model.addAttribute("acnotfound", "");
+                            int st=customerService.admintransfermoney(senderaccount, receiveraccount, String.valueOf(senderaccount.getAccount_id()),String.valueOf(receiveraccount.getAccount_id()), Double.parseDouble(txtamount), "Transfer", txtremark);
+                            if (st==0) {
+                                model.addAttribute("balanceerr", "Insufficient Balance in sender account");
+                                return "admintransfer";
+                            }
+                        }
+                        else {
+
+                            model.addAttribute("receiveracnotfound", "Account not found");
+                            return "admintransfer";
+                        }
+                    }
+                    else {
+
+                        model.addAttribute("senderacnotfound", "Account not found");
+                        return "admintransfer";
+                    }
+
+                }
+                catch (Exception e) {
+                    return e.getMessage();
+                }
+                return "redirect:/admindashboard";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
 
     @RequestMapping("/admindashboard")
     public String admindashboard(HttpSession session) {
