@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FundLab</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="admin_header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="logo" style="margin-left: 18px">
+          <img src="/images/white_logo.png" alt="" height="50px" style="float: left;">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="adminmenu" style="float: right;">
+          <a href="/customerlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+  <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
+    <div class="admin_sidebar_menu">
+
+      <div>
+        <br>
+        <a href="/customerdashboard">Dashboard</a>
+
+        <a href="/customertrasfer">Transfer Money</a>
+
+
+        <a href="">Transaction History</a>
+
+        <a href="">Fixed Deposit</a>
+
+        <a href="/customersupport">Customer Support</a>
+
+        <a href="/profile">Profile</a>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <br><br>
+  <div class="col-lg-10">
+
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="recenttransaction">
+          <h2 style="font-family: math; font-weight: 700;}">Recent Transaction</h2>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Remark</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each = "transaction: ${mytransaction}">
+                <td th:text="${transaction.transaction_id}">Load...</td>
+                <td th:text="${transaction.sender_account}">Load...</td>
+                <td th:text="${transaction.receiver_account}">Load...</td>
+                <td th:text="${transaction.transaction_amount}">Load...</td>
+                <td th:text="${transaction.transaction_date}"></td>
+                <td th:text="${transaction.transaction_type}"></td>
+                <td th:text="${transaction.transaction_remark}"></td>
+
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

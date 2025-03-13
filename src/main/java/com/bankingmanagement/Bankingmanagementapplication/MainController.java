@@ -806,4 +806,41 @@ public String adminacconfirm(
         }
     }
 
+
+//    transaction history
+    @RequestMapping("/customertransactionhistory")
+    public String customertransactionhistory(Model model, HttpSession session) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer customer= customerService.findrecodebyid(Integer.parseInt(custid));
+                Account account= customerService.findaccountrecodebycustomerid(Integer.parseInt(custid));
+                model.addAttribute("account", account);
+                model.addAttribute("customer", customer);
+                model.addAttribute("acbalance", "€ "+account.getAccount_balance());
+                model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
+
+                List<Transaction> alltransaction=customerService.findallTransaction();
+                List<TransactionView> mytransaction= new ArrayList<>();
+                for (Transaction transaction : alltransaction) {
+                    if ((transaction.getReceiver_account().equals(String.valueOf(account.getAccount_id()))) || transaction.getSender_account().equals(String.valueOf(account.getAccount_id()))) {
+                        Account send= customerService.findaccountrecodebyid(Integer.parseInt(transaction.getSender_account()));
+                        Account receive= customerService.findaccountrecodebyid(Integer.parseInt(transaction.getReceiver_account()));
+                        mytransaction.add(new TransactionView(transaction, send.getAccount_number(), receive.getAccount_number()));
+                    }
+                }
+                model.addAttribute("mytransaction", mytransaction);
+
+
+                return "customertransactionhistory";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return e.getMessage();
+        }
+
+    }
+
 }
