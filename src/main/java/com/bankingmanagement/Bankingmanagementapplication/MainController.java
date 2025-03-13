@@ -1,4 +1,4 @@
-package com.bankingmanagement.Bankingmanagementapplication;
+/*package com.bankingmanagement.Bankingmanagementapplication;
 
 import MyModel.*;
 import Repository.Customer_Repository;
@@ -64,7 +64,7 @@ public class MainController {
 
     @RequestMapping("/adminlogin")
     public String admin() {
-        return "adminlogin";
+        return "admin_login";
     }
 
 //    admin login
@@ -772,71 +772,5 @@ public String adminacconfirm(
         }
     }
 
-    @GetMapping("/staff/{id}")
-    public String staffdetail(@PathVariable Integer id, Model model, HttpSession session) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-                Admin admin=admin_services.getAdminById(Integer.parseInt(adminid));
-                model.addAttribute("admin", admin);
-                return "staffdetail";
-            }else {
-                return "redirect:/adminlogin";
-            }
-        }
-        catch (NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
 
-    }
-
-    @PostMapping("/admindetailsave")
-    public String admindetailsave(Model model, HttpSession session, @RequestParam String txtadminid, @RequestParam String txtadminname, @RequestParam String txtadminrole, @RequestParam String txtadminstatus ) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-                admin_services.updateadmin(txtadminid, txtadminname, txtadminrole, txtadminstatus);
-                return "redirect:/staff";
-            }else {
-                return "redirect:/adminlogin";
-            }
-        }
-        catch(NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
-    }
-
-    @RequestMapping("/addstaff")
-    public String addstaff(Model model, HttpSession session) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-
-                return "addstaff";
-            }else {
-                return "redirect:/adminlogin";
-            }
-        }
-        catch(NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
-    }
-
-
-    @PostMapping("/adminaddstaff")
-    public String adminaddstaff(Model model, HttpSession session, @RequestParam String txtadminname, @RequestParam String txtadminemail, @RequestParam String txtadminpassword, @RequestParam String txtadminrole, @RequestParam String txtadminstatus ) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-                admin_services.adminaddstafffunction(txtadminemail, txtadminpassword, txtadminname, txtadminrole, txtadminstatus);
-                return "redirect:/staff";
-            }else {
-                return "redirect:/adminlogin";
-            }
-        }
-        catch(NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
-    }
-
-}
+}*/
