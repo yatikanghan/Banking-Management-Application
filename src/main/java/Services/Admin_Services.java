@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -95,9 +96,9 @@ public class Admin_Services {
         return template.update(sql,support_id);
    }
 
-    public int solvesupportrecodebyid(int support_id){
-        String sql = "update support set support_status=? where support_id=?";
-        return template.update(sql, "Solved",support_id);
+    public int solvesupportrecodebyid(int support_id, int admin_id){
+        String sql = "update support set support_status=?, admin_id=? where support_id=?";
+        return template.update(sql, "Solved",admin_id,support_id);
     }
 
     public List<Admin> findAlladmins() {

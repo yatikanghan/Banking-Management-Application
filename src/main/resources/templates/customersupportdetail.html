@@ -92,6 +92,11 @@
                 <div class="form-group">
                     <p class="s_title">Created At</p>
                     <p class="s_desc" th:text="${support.support_created_at}"></p>
+                    <br>
+                    <p class="s_title">status</p>
+                    <p class="s_desc" th:text="${support.support_status}"></p>
+
+                    <br>
                     <label for="supportsubjectname">Subject :</label>
                     <input type="text" th:value="${support.support_title}" class="form-control" id="supportsubjectname" name="supportsubjectname" placeholder="Enter your subject" readonly>
                 </div>

@@ -445,7 +445,7 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                admin_services.solvesupportrecodebyid(id);
+                admin_services.solvesupportrecodebyid(id, Integer.parseInt(adminid));
 
                 return "redirect:/adminsupport";
             }else {
@@ -516,7 +516,10 @@ public String adminacconfirm(
             String custid=session.getAttribute("custid").toString();
             if (custid!=null) {
                 Customer customer= (Customer) session.getAttribute("currentcustomer");
+                Account account= customerService.findaccountrecodebycustomerid(customer.getCustomer_id());
+                model.addAttribute("account", account);
                 model.addAttribute("customer", customer);
+                model.addAttribute("acbalance", "€ "+account.getAccount_balance());
                 model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
                 return "customerdashboard";
             }else {
@@ -555,7 +558,7 @@ public String adminacconfirm(
                         mysupportlist.add(support);
                     }
                 }
-                model.addAttribute("supportlist", allsuportlist);
+                model.addAttribute("supportlist", mysupportlist);
                 return "customersupport";
             }else {
                 return "redirect:/customerloginpage";
@@ -603,7 +606,7 @@ public String adminacconfirm(
                 customerService.addcustomersupport(customer.getCustomer_id(),currentaccount.getAccount_id(), supportsubjectname, supportsubjectdesc,"Pending");
 
 
-                return "customersupport";
+                return "redirect:/customersupport";
             }else {
                 return "redirect:/customerloginpage";
             }
@@ -692,7 +695,82 @@ public String adminacconfirm(
 
     }
 
+//    customer transfer
 
+    @RequestMapping("/customertrasfer")
+    public String customertrasfer(Model model, HttpSession session) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                return "customertransfer";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+    //    admin transfer money
+    @PostMapping("/customertransfermoney")
+    public String customertransfermoney(Model model, HttpSession session, @RequestParam String txtreceiveraccount, @RequestParam String txtamount, @RequestParam String txtremark) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                try {
+                    Account senderaccount=customerService.findaccountrecodebycustomerid(Integer.parseInt(custid));
+                    Account receiveraccount=customerService.findaccountrecodebyacnumber(txtreceiveraccount);
+                    if (receiveraccount!=null) {
+                        model.addAttribute("acnotfound", "");
+                        int st=customerService.admintransfermoney(senderaccount, receiveraccount, String.valueOf(senderaccount.getAccount_id()),String.valueOf(receiveraccount.getAccount_id()), Double.parseDouble(txtamount), "Transfer", txtremark);
+                        if (st==0) {
+                            model.addAttribute("balanceerr", "Insufficient Balance in sender account");
+                            return "customertransfer";
+                        }
+                        else {
+                            return "redirect:/customerdashboard";
+                        }
+                    }
+                    else {
+
+                        model.addAttribute("receiveracnotfound", "Account not found");
+                        return "admintransfer";
+                    }
+
+                }
+                catch (Exception e) {
+                    return e.getMessage();
+                }
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+
+
+//    staff
+
+    @RequestMapping("/staff")
+    public String staff(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                List<Admin> adminlist=admin_services.findAlladmins();
+                model.addAttribute("adminlist", adminlist);
+                return "staff";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
 
 
 }

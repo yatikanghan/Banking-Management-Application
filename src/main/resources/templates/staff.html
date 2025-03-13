@@ -41,13 +41,13 @@
 
                 <a href="">Fixed Deposit</a>
 
-                <a href="">Transfer</a>
+                <a href="/admintransfer">Transfer</a>
 
-                <a href="">Deposit</a>
+                <a href="/admindebit">Deposit</a>
 
-                <a href="">Withdraw</a>
+                <a href="/adminwithdraw">Withdraw</a>
 
-                <a href="/staff">Manage Staff</a>
+                <a href="/staff">Manage Employee</a>
 
                 <a href="/adminsupport">Contact Us</a>
 
@@ -61,41 +61,38 @@
     </div>
     <br><br>
     <div class="col-lg-10">
-        <div class="container" style="padding-left: 100px;">
-            <div class="row">
-                <h2 style="font-family: math; font-weight: 800">Withdraw Money</h2>
-                <br>
-                <form action="/adminwithdrawamount" method="post">
-                    <div class="row">
-                        <br>
-                        <br>
-                        <div class="col-lg-6 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="txtaccountnumber">Account Number :</label>
-                                <input type="number" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter Account Number">
-                                <p th:text="${acnotfound}"></p>
-                                <br>
-                                <label for="txtamount">Withdraw Amount :</label>
-                                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
-                                <br>
-                                <label for="txtremark">Remark :</label>
-                                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
-                                <br>
+        <div class="container" style="margin-top: 0">
+            <div class="stheader"><h3><b>Customer Support</b></h3></div>
 
+            <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                <a href=""><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Add New Employee </button></a>
+                <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>Admin Name</th>
+                                <th>Admin Email ID</th>
+                                <th>Role</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each = "admin: ${adminlist}">
+                                <td th:text="${admin.admin_id}">Load...</td>
+                                <td th:text="${admin.admin_name}">Load...</td>
+                                <td th:text="${admin.admin_emailid}">Load...</td>
+                                <td th:text="${admin.admin_role}">Load...</td>
+<!--                                <td><a th:href="@{/customersupport/{id}(id=${supportlist.support_id})}"><button type="button" class="btn btn-primary">Show</button></a>-->
+                            </tr>
 
-                            </div>
-                        </div>
-                        <br>
-                        <br>
+                            </tbody>
+                        </table>
                     </div>
-                    <br><br>
-                    <div class="accountconfirmbtn" style="float: left">
-                        <button type="submit" onclick="return confirm('Are you sure?')">Withdraw</button>
-                    </div>
-                    <br>
-
-                </form>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
