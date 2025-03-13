@@ -125,5 +125,11 @@ public class Admin_Services {
     }
 
 
+    public int adminaddstafffunction(String emailid, String password, String name, String role, String status) {
+        String sql="Insert into admin (admin_emailid,admin_password,admin_name,admin_role,admin_status) values(?,?,?,?,?)";
+        return template.update(sql, emailid, password, name, role, status);
+    }
+
+
 
 }
