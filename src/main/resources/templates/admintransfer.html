@@ -61,38 +61,44 @@
     <div class="col-lg-10">
         <div class="container" style="padding-left: 100px;">
             <div class="row">
-                <h2 style="font-family: math; font-weight: 800">Debit Money</h2>
+                <h2 style="font-family: math; font-weight: 800">Transfer Money</h2>
                 <br>
-                    <form action="/admindebitamount" method="post">
-                        <div class="row">
-                            <br>
-                            <br>
-                            <div class="col-lg-6 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="txtaccountnumber">Account Number :</label>
-                                    <input type="number" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter Account Number">
-                                    <p th:text="${acnotfound}"></p>
-                                    <br>
-                                    <label for="txtamount">Amount :</label>
-                                    <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
-                                    <br>
-                                    <label for="txtremark">Remark :</label>
-                                    <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
-                                    <br>
+                <form action="/admintrasfermoney" method="post">
+                    <div class="row">
+                        <br>
+                        <br>
+                        <div class="col-lg-6 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="txtsenderaccount">Sender Account Number :</label>
+                                <input type="number" class="form-control" id="txtsenderaccount" name="txtsenderaccount" placeholder="Enter Account Number">
+                                <p th:text="${senderacnotfound}"></p>
+                                <br>
+                                <label for="txtreceiveraccount">Receiver Account Number :</label>
+                                <input type="number" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number">
+                                <p th:text="${receiveracnotfound}"></p>
+                                <br>
+                                <label for="txtamount">Withdraw Amount :</label>
+                                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
+                                <p th:text="${balanceerr}"></p>
+                                <br>
+
+                                <label for="txtremark">Remark :</label>
+                                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
+                                <br>
 
 
-                                </div>
                             </div>
-                            <br>
-                            <br>
-                        </div>
-                        <br><br>
-                        <div class="accountconfirmbtn" style="float: left">
-                            <button type="submit" onclick="return confirm('Are you sure?')">Deposit</button>
                         </div>
                         <br>
+                        <br>
+                    </div>
+                    <br><br>
+                    <div class="accountconfirmbtn" style="float: left">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Withdraw</button>
+                    </div>
+                    <br>
 
-                    </form>
+                </form>
             </div>
         </div>
     </div>
