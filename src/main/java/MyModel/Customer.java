@@ -3,6 +3,10 @@ package MyModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Customer {
@@ -27,6 +31,41 @@ public class Customer {
     @Column(nullable = false)
     String customer_country;
 
+    @NotBlank(message = "First name is required")
+    @Size(min = 3, max = 50, message = "First name must be between 3 and 50 characters")
+    private String txtfname;
+
+    @NotBlank(message = "Last name is required")
+    @Size(min = 3, max = 50, message = "Last name must be between 3 and 50 characters")
+    private String txtlname;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String txtemail;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String txtpassword;
+
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits")
+    private String txtmobilenumber;
+
+    @NotBlank(message = "Address is required")
+    private String txtaddress;
+
+    @NotBlank(message = "Postal code is required")
+    @Pattern(regexp = "^[0-9]{4,6}$", message = "Postal code must be between 4 to 6 digits")
+    private String txtpostcode;
+
+    @NotBlank(message = "Date of birth is required")
+    private String txtdob;
+
+    @NotBlank(message = "Account type is required")
+    private String txtactype;
+
+    @NotBlank(message = "Country is required")
+    private String txtcountry;
     public Customer() {
     }
 

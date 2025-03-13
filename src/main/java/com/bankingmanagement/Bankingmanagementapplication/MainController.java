@@ -5,11 +5,13 @@ import Repository.Customer_Repository;
 import Services.Admin_Services;
 import Services.Customer_Service;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -771,6 +773,24 @@ public String adminacconfirm(
             return "redirect:/adminlogin";
         }
     }
+    @RequestMapping("/registeraccount")
+    public class CustomerRegistrationController {
 
+        @PostMapping
+        public String registerCustomer(
+                @Valid @ModelAttribute("customer") Customer customerDto,
+                BindingResult result,
+                Model model) {
+
+            if (result.hasErrors()) {
+                model.addAttribute("errors", result.getAllErrors());
+                return "customerregister"; // Return back to form with errors
+            }
+
+            // Proceed with saving the customer (service layer logic)
+            model.addAttribute("message", "Registration successful!");
+            return "success";
+        }
+    }
 
 }

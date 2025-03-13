@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -62,16 +63,22 @@
             <br>
             <div class="col-lg-6 col-sm-12 col-md-12">
               <div class="form-group">
-                <label for="txtreceiveraccount">Receiver Account Number :</label>
-                <input type="number" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number">
+                <label for="txtreceiveraccount">Receiver Account Number:</label>
+                <input type="text" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number">
                 <p th:text="${receiveracnotfound}"></p>
                 <br>
-                <label for="txtamount">Withdraw Amount :</label>
+                <label for="txtragaineceiveraccount">Re-enter Account Number:</label>
+                <input type="text" class="form-control" id="txtragaineceiveraccount" name="txtragaineceiveraccount" placeholder="Enter Account Number">
+                <p class="text-danger" id="accountError"></p>
+                <p th:text="${receiveracnotfound}"></p>
+                <br>
+                <label for="txtamount">Transfer Amount:</label>
                 <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
+                <p class="text-danger" id="amountError"></p>
                 <p th:text="${balanceerr}"></p>
                 <br>
 
-                <label for="txtremark">Remark :</label>
+                <label for="txtremark">Remark:</label>
                 <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
                 <br>
 
@@ -92,5 +99,49 @@
     </div>
   </div>
 </div>
+<script>
+  function validateTransfer(event) {
+    event.preventDefault(); // Prevent form submission
+
+    let isValid = true;
+
+    // Get input values
+    let account1 = document.getElementById("txtreceiveraccount").value.trim();
+    let account2 = document.getElementById("txtragaineceiveraccount").value.trim();
+    let amount = document.getElementById("txtamount").value.trim();
+
+    // Get error message elements
+    let accountError = document.getElementById("accountError");
+    let amountError = document.getElementById("amountError");
+
+    // Reset previous errors
+    accountError.textContent = "";
+    amountError.textContent = "";
+
+    // Validate that account numbers match
+    if (account1 === "" || account2 === "") {
+      accountError.textContent = "Both account number fields are required.";
+      isValid = false;
+    } else if (account1 !== account2) {
+      accountError.textContent = "Account numbers do not match!";
+      isValid = false;
+    }
+
+    // Validate amount
+    if (amount === "" || isNaN(amount) || amount <= 0) {
+      amountError.textContent = "Please enter a valid transfer amount.";
+      isValid = false;
+    }
+
+    // If validation passes, submit the form
+    if (isValid) {
+      document.getElementById("transferForm").submit();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("transferForm").addEventListener("submit", validateTransfer);
+  });
+</script>
 </body>
 </html>

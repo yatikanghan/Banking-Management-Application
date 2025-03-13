@@ -147,12 +147,7 @@
             isValid = false;
         }
 
-        // Validate Mobile Number (10 digits)
-        let mobilePattern = /^[0-9]{10}$/;
-        if (!mobilePattern.test(mobile)) {
-            document.getElementById("mobileError").textContent = "Mobile number must be 10 digits.";
-            isValid = false;
-        }
+
 
         // Validate Postal Code (Numbers only)
         let postcodePattern = /^[0-9]{4,6}$/;
