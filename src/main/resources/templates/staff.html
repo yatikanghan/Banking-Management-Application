@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="admin_header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="logo" style="margin-left: 18px">
+                    <img src="/images/white_logo.png" alt="" height="50px" style="float: left;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="adminmenu" style="float: right;">
+                    <a href="/adminlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+    <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
+        <div class="admin_sidebar_menu">
+            <div>
+                <h3 style="font-family: math; color: white">Administration</h3>
+            </div>
+            <div>
+                <br>
+                <a href="">Dashboard</a>
+
+                <a href="/adminmanageaccount">Account</a>
+
+                <a href="/adminnewaccount">Account Openning</a>
+
+                <a href="">Fixed Deposit</a>
+
+                <a href="/admintransfer">Transfer</a>
+
+                <a href="/admindebit">Deposit</a>
+
+                <a href="/adminwithdraw">Withdraw</a>
+
+                <a href="/staff">Manage Employee</a>
+
+                <a href="/adminsupport">Contact Us</a>
+
+                <a href="/adminprofile">Admin Profile</a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <br><br>
+    <div class="col-lg-10">
+        <div class="container" style="margin-top: 0">
+            <div class="stheader"><h3><b>Customer Support</b></h3></div>
+
+            <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                <a href=""><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Add New Employee </button></a>
+                <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>Admin Name</th>
+                                <th>Admin Email ID</th>
+                                <th>Role</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+<!--                            <tr th:each = "admin: ${adminlist}">-->
+<!--                                <td th:text="${admin.admin_id}">Load...</td>-->
+<!--                                <td th:text="${admin.admin_name}">Load...</td>-->
+<!--                                <td th:text="${admin.admin_emailid}">Load...</td>-->
+<!--                                <td th:text="${admin.admin_role}">Load...</td>-->
+<!--                                <td><a th:href="@{/customersupport/{id}(id=${supportlist.support_id})}"><button type="button" class="btn btn-primary">Show</button></a>-->
+<!--                            </tr>-->
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

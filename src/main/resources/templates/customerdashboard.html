@@ -33,7 +33,7 @@
                 <br>
                 <a href="/customerdashboard">Dashboard</a>
 
-                <a href="">Transfer Money</a>
+                <a href="/customertrasfer">Transfer Money</a>
 
 
                 <a href="">Transaction History</a>
@@ -60,9 +60,9 @@
                     <div class="col-lg-6">
                         <div class="dashboardcard">
                             <h5>Saving A/C</h5>
-                            <h4>0000000000</h4>
+                            <h4 th:text="${account.account_number}">0000000000</h4>
 
-                            <h3>€ 100</h3>
+                            <h3 th:text="${acbalance}"></h3>
                             <h6>Balance available</h6>
                         </div>
                     </div>
