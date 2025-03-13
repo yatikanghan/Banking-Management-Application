@@ -246,5 +246,9 @@ public List<Support> findAllSupport() {
             }
         });
     }
+
+    public void updatecustomer(int txtcustomerId, String txtcustomerFirstname, String txtlname, String txtmobilenumber, String txtaddress) {
+
+    }
 }
 
