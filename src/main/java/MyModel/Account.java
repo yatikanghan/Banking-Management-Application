@@ -1,12 +1,11 @@
 package MyModel;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Account {
     @Id
+
     int account_id;
     @Column(nullable = false)
     int customer_id;

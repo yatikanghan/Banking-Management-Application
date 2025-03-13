@@ -3,6 +3,7 @@ package Services;
 import MyModel.Account;
 import MyModel.Admin;
 import MyModel.Customer;
+import MyModel.Support;
 import Repository.Account_Repository;
 import Repository.Customer_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,29 @@ public class Customer_Service {
 
     }
 
+    public Account findaccountrecodebycustomerid(int customer_id) {
+
+        String sql = "SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE customer_id = ?";
+
+        return template.queryForObject(sql, new Object[]{customer_id}, new RowMapper<Account>() {
+            @Override
+            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Account account = new Account();
+                account.setAccount_id(rs.getInt("account_id"));
+                account.setCustomer_id(rs.getInt("customer_id"));
+                account.setAccount_number(rs.getString("account_number"));
+                account.setAccount_type(rs.getString("account_type"));
+                account.setAccount_balance(rs.getString("account_balance"));
+                account.setAccount_status(rs.getString("account_status"));
+                account.setAccount_created_at(rs.getString("account_created_at"));
+
+
+                return account;
+            }
+        });
+
+    }
+
 
     public int addcustomersupport(int customer_id, int account_id, String support_title,String support_desc, String support_status) {
         String sql = "INSERT INTO support (customer_id,account_id,support_title,support_desc,support_status) values(?,?,?,?,?)";
@@ -139,6 +163,12 @@ public int updatecustomer(String customer_id, String customer_firstname, String 
     String sql = "UPDATE customers SET customer_firstname=(?), customer_lastname=(?), customer_emailid=(?), customer_password=(?), customer_mobile=(?), customer_dob=(?), customer_address=(?),customer_postcode=(?),customer_country=(?) WHERE customer_id=(?)";
     return template.update(sql, customer_firstname, customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country, customer_id);
 }
+
+    public int updateprofile(String customer_id, String customer_firstname, String customer_lastname, String customer_mobile, String customer_address, String customer_postcode, String customer_country) {
+        String sql = "UPDATE customers SET customer_firstname=(?), customer_lastname=(?), customer_mobile=(?), customer_address=(?),customer_postcode=(?),customer_country=(?) WHERE customer_id=(?)";
+        return template.update(sql, customer_firstname, customer_lastname, customer_mobile, customer_address, customer_postcode, customer_country, customer_id);
+    }
+
 public int updateaccount(String account_id, String account_type, String account_balance, String account_status){
     String sql = "UPDATE account SET account_type=(?), account_balance=(?), account_status=(?) WHERE account_id=(?)";
     return template.update(sql, account_type, account_balance, account_status, account_id);
@@ -169,4 +199,52 @@ public int updateaccount(String account_id, String account_type, String account_
         });
 
     }
+
+
+
+//    support
+public List<Support> findAllSupport() {
+//        String sql = "select * from support";
+    String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support";
+    RowMapper<Support> rm = new RowMapper<Support>() {
+        @Override
+        public Support mapRow(ResultSet resultSet, int i) throws SQLException {
+            Support support = new Support(resultSet.getInt("support_id"),
+                    resultSet.getInt("customer_id"),
+                    resultSet.getInt("account_id"),
+                    resultSet.getString("support_title"),
+                    resultSet.getString("support_desc"),
+                    resultSet.getString("support_created_at"),
+                    resultSet.getInt("admin_id"),
+                    resultSet.getString("support_status"));
+
+
+            return support;
+        }
+    };
+
+    return template.query(sql, rm);
 }
+
+    public Support findSupportRecodebyid(int id) {
+        String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support where support_id=?";
+        return template.queryForObject(sql, new Object[]{id}, new RowMapper<Support>() {
+            @Override
+            public Support mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Support support = new Support();
+                support.setSupport_id(rs.getInt("support_id"));
+                support.setCustomer_id(rs.getInt("customer_id"));
+                support.setAccount_id(rs.getInt("account_id"));
+                support.setSupport_title(rs.getString("support_title"));
+                support.setSupport_desc(rs.getString("support_desc"));
+                support.setSupport_created_at(rs.getString("support_created_at"));
+                support.setAdmin_id(rs.getInt("admin_id"));
+                support.setSupport_status(rs.getString("support_status"));
+
+
+                return support;
+            }
+        });
+    }
+}
+

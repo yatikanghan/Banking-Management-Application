@@ -291,6 +291,29 @@
 }
 
 
+.s_title{
+    font-weight: 600;
+}
+.s_desc{
+
+}
+
+.support_stat{
+    margin-bottom: 150px;
+}
+.support_stat a{
+    padding-right: 20px;
+}
+.support_stat button{
+    padding: 10px 30px;
+}
+
+.dashboardcard{
+    background-image: linear-gradient(to right, #2c2c45 0%, #373851 51%, #5b5b81 100%);
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+}
 
 
 

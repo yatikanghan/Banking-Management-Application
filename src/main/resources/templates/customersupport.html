@@ -57,44 +57,31 @@
 
             <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
                 <a href="/customeraddsupport"><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Add New Query </button></a>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Student Name</th>
-                            <th>Email ID</th>
-                            <th>Mobile Number</th>
-                            <th>City</th>
-                            <th>Country</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--                        <tr th:each = "student: ${students}">-->
-                        <!--                            <td th:text="${student.student_id}">Load...</td>-->
-                        <!--                            <td th:text="${student.student_name}">Load...</td>-->
-                        <!--                            <td th:text="${student.student_email}">Load...</td>-->
-                        <!--                            <td th:text="${student.student_mobile}">Load...</td>-->
-                        <!--                            <td th:text="${student.student_city}">Load...</td>-->
-                        <!--                            <td th:text="${student.student_country}">Load...</td>-->
-                        <!--                            <td><a th:href="@{/update/{id}(id=${student.student_id})}"><button type="button" class="btn btn-success">Edit</button></a>-->
-                        <!--                            <td><a th:href="@{/delete/{id}(id=${student.student_id})}" onclick="return confirm('Are you sure?')"><button type="button" class="btn btn-danger">Delete</button></a>-->
-                        <!--                            </td>-->
-                        <!--                        </tr>-->
-                        <tr>
-                            <td>ID</td>
-                            <td>Student Name</td>
-                            <td>Email ID</td>
-                            <td>Mobile Number</td>
-                            <td>City</td>
-                            <td>Country</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                    <!--                <a href="/addstudentpage"><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Add Student </button></a>-->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Support ID</th>
+                                <th>Subject</th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each = "supportlist: ${supportlist}">
+                                <td th:text="${supportlist.support_id}">Load...</td>
+                                <td th:text="${supportlist.support_title}">Load...</td>
+                                <td th:text="${supportlist.support_created_at}">Load...</td>
+                                <td th:text="${supportlist.support_status}">Load...</td>
+                                <td><a th:href="@{/customersupport/{id}(id=${supportlist.support_id})}"><button type="button" class="btn btn-primary">Show</button></a>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

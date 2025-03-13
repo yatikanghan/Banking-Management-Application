@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FundLab</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="admin_header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="logo" style="margin-left: 18px">
+                    <img src="/images/white_logo.png" alt="" height="50px" style="float: left;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="adminmenu" style="float: right;">
+                    <a href="/customerlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+    <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
+        <div class="admin_sidebar_menu">
+
+            <div>
+                <br>
+                <a href="/customerdashboard">Dashboard</a>
+
+                <a href="">Transfer Money</a>
+
+
+                <a href="">Transaction History</a>
+
+                <a href="">Fixed Deposit</a>
+
+                <a href="">Customer Support</a>
+
+                <a href="">Profile</a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <br><br>
+    <div class="col-lg-10">
+        <div class="container">
+            <form action="/customerprofilesave" method="post">
+                <div class="row">
+                    <h3>Manage Account Detail</h3>
+                    <br>
+
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="txtcustomer_id">Customer Id :</label>
+                            <input type="number" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcustomer_id" name="txtcustomer_id" readonly>
+                            <br>
+                            <label for="txtcustomer_firstname">First Name :</label>
+                            <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtcustomer_firstname" name="txtcustomer_firstname" placeholder="Enter your first name">
+                            <br>
+                            <label for="txtemail">Email Address :</label>
+                            <input type="email" th:value="${customer.getCustomer_emailid()}" class="form-control" id="txtemail" name="txtemail" placeholder="Enter your Email Address" readonly>
+                            <br>
+                            <label for="txtdob">Date of Birth :</label>
+                            <input type="date" th:value="${customer.getCustomer_dob()}" class="form-control" id="txtdob" name="txtdob" placeholder="Enter your Date of Birth" readonly>
+                            <br>
+                            <label for="txtmobilenumber">Mobile Number :</label>
+                            <input type="text" th:value="${customer.getCustomer_mobile()}" class="form-control" id="txtmobilenumber" name="txtmobilenumber" placeholder="Enter your mobile number" >
+                            <br>
+                            <label for="txtactype">Account Type :</label>
+                            <input type="text" th:value="${account.getAccount_type()}" class="form-control" id="txtactype" name="txtactype" disabled>
+                            <br>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="txtaccountnumber">Account Number :</label>
+                            <input type="text" th:value="${account.getAccount_number()}" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter your last name" readonly>
+                            <br>
+                            <label for="txtlname">Last Name :</label>
+                            <input type="text" th:value="${customer.getCustomer_lastname()}" class="form-control" id="txtlname" name="txtlname" placeholder="Enter your last name">
+                            <br>
+
+                            <label for="txtaddress">Address :</label>
+                            <input type="text" th:value="${customer.getCustomer_address()}" class="form-control" id="txtaddress" name="txtaddress" placeholder="Enter your Address">
+                            <br>
+                            <label for="txtpostcode">Postal Code :</label>
+                            <input type="text" th:value="${customer.getCustomer_postcode()}" class="form-control" id="txtpostcode" name="txtpostcode" placeholder="Enter your postal code">
+                            <br>
+                            <label for="txtcountry">Country :</label>
+                            <input type="text" th:value="${customer.getCustomer_country()}" class="form-control" id="txtcountry" name="txtcountry" placeholder="Enter your Country">
+                            <br>
+                            <label for="txtaccountopenning">Account Openning Date :</label>
+                            <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" disabled>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="accountconfirmbtn">
+                    <button type="submit" onclick="return confirm('Are you sure?')">Update</button>
+                </div>
+                <br>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
