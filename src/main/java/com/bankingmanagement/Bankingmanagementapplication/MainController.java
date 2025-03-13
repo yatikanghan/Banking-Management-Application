@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListResourceBundle;
 
 @Controller
 public class MainController {
@@ -66,7 +67,7 @@ public class MainController {
 
     @RequestMapping("/adminlogin")
     public String admin() {
-        return "admin_login";
+        return "adminlogin";
     }
 
 //    admin login
@@ -523,6 +524,17 @@ public String adminacconfirm(
                 model.addAttribute("customer", customer);
                 model.addAttribute("acbalance", "€ "+account.getAccount_balance());
                 model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
+
+                List<Transaction> alltransaction=customerService.findallTransaction();
+                List<Transaction> mytransaction= new ArrayList<>();
+                for (Transaction transaction : alltransaction) {
+                    if ((transaction.getReceiver_account().equals(custid)) || transaction.getSender_account().equals(custid)) {
+                        mytransaction.add(transaction);
+                    }
+                }
+                model.addAttribute("mytransaction", mytransaction);
+
+
                 return "customerdashboard";
             }else {
                 return "redirect:/customerloginpage";
@@ -783,6 +795,7 @@ public String adminacconfirm(
                 Model model) {
 
             if (result.hasErrors()) {
+                model.addAttribute("errors", result.getAllErrors());
                 model.addAttribute("errors", result.getAllErrors());
                 return "customerregister"; // Return back to form with errors
             }

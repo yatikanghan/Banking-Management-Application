@@ -1,9 +1,6 @@
 package Services;
 
-import MyModel.Account;
-import MyModel.Admin;
-import MyModel.Customer;
-import MyModel.Support;
+import MyModel.*;
 import Repository.Account_Repository;
 import Repository.Customer_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -347,8 +344,31 @@ public List<Support> findAllSupport() {
         });
     }
 
-    public void updatecustomer(int txtcustomerId, String txtcustomerFirstname, String txtlname, String txtmobilenumber, String txtaddress) {
+//    transaction
+public List<Transaction> findallTransaction() {
+//        String sql = "select * from support";
+    String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support";
+    RowMapper<Transaction> rm = new RowMapper<Transaction>() {
+        @Override
+        public Transaction mapRow(ResultSet resultSet, int i) throws SQLException {
+            Transaction transaction = new Transaction(resultSet.getInt("t_id"),
+                    resultSet.getString("transaction_id"),
+                    resultSet.getString("sender_account"),
+                    resultSet.getString("receiver_account"),
+                    resultSet.getInt("transaction_amount"),
+                    resultSet.getString("transaction_type"),
+                    resultSet.getString("transaction_date"),
+                    resultSet.getInt("admin_id"),
+                    resultSet.getString("transaction_remark"));
 
-    }
+
+            return transaction;
+        }
+    };
+
+    return template.query(sql, rm);
+}
+
+
 }
 

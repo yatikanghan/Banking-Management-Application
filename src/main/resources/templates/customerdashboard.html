@@ -87,21 +87,26 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Support ID</th>
-                                <th>Subject</th>
-                                <th>Created At</th>
-                                <th>Status</th>
-                                <th></th>
+                                <th>Transaction ID</th>
+                                <th>Sender</th>
+                                <th>Receiver</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Remark</th>
                             </tr>
                             </thead>
                             <tbody>
-<!--                            <tr th:each = "supportlist: ${supportlist}">-->
-<!--                                <td th:text="${supportlist.support_id}">Load...</td>-->
-<!--                                <td th:text="${supportlist.support_title}">Load...</td>-->
-<!--                                <td th:text="${supportlist.support_created_at}">Load...</td>-->
-<!--                                <td th:text="${supportlist.support_status}">Load...</td>-->
-<!--                                <td><a th:href="@{/customersupport/{id}(id=${supportlist.support_id})}"><button type="button" class="btn btn-primary">Show</button></a>-->
-<!--                            </tr>-->
+                            <tr th:each = "transaction: ${mytransaction}">
+                                <td th:text="${transaction.transaction_id}">Load...</td>
+                                <td th:text="${transaction.sender_account}">Load...</td>
+                                <td th:text="${transaction.receiver_account}">Load...</td>
+                                <td th:text="${transaction.transaction_amount}">Load...</td>
+                                <td th:text="${transaction.transaction_date}"></td>
+                                <td th:text="${transaction.transaction_type}"></td>
+                                <td th:text="${transaction.transaction_remark}"></td>
+
+                            </tr>
 
                             </tbody>
                         </table>
