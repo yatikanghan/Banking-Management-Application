@@ -1,4 +1,4 @@
-package com.bankingmanagement.Bankingmanagementapplication.Controller;
+/*package com.bankingmanagement.Bankingmanagementapplication.Controller;
 
 import MyModel.Account;
 import MyModel.AccountDetailView;
@@ -175,4 +175,4 @@ public class AdminController {
         }
 
     }
-}
+}*/

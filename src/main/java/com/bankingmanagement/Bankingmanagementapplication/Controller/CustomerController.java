@@ -1,4 +1,4 @@
-package com.bankingmanagement.Bankingmanagementapplication.Controller;
+/*package com.bankingmanagement.Bankingmanagementapplication.Controller;
 
 import MyModel.Customer;
 import Services.Customer_Service;
@@ -74,4 +74,4 @@ public class CustomerController {
         return "redirect:/customerlogin";
     }
 
-}
+}*/
