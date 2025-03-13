@@ -518,8 +518,8 @@ public String adminacconfirm(
         try {
             String custid=session.getAttribute("custid").toString();
             if (custid!=null) {
-                Customer customer= (Customer) session.getAttribute("currentcustomer");
-                Account account= customerService.findaccountrecodebycustomerid(customer.getCustomer_id());
+                Customer customer= customerService.findrecodebyid(Integer.parseInt(custid));
+                Account account= customerService.findaccountrecodebycustomerid(Integer.parseInt(custid));
                 model.addAttribute("account", account);
                 model.addAttribute("customer", customer);
                 model.addAttribute("acbalance", "€ "+account.getAccount_balance());
@@ -528,7 +528,7 @@ public String adminacconfirm(
                 List<Transaction> alltransaction=customerService.findallTransaction();
                 List<Transaction> mytransaction= new ArrayList<>();
                 for (Transaction transaction : alltransaction) {
-                    if ((transaction.getReceiver_account().equals(custid)) || transaction.getSender_account().equals(custid)) {
+                    if ((transaction.getReceiver_account().equals(String.valueOf(account.getAccount_id()))) || transaction.getSender_account().equals(String.valueOf(account.getAccount_id()))) {
                         mytransaction.add(transaction);
                     }
                 }
@@ -541,7 +541,7 @@ public String adminacconfirm(
             }
         }
         catch (NullPointerException e) {
-            return "redirect:/customerloginpage";
+            return e.getMessage();
         }
     }
 

@@ -12,9 +12,9 @@ public class Transaction {
     String transaction_id;
     @Column(nullable = false)
     String sender_account;
-    @Column(nullable = false)
+    @Column(nullable = true)
     String receiver_account;
-    @Column(nullable = false)
+    @Column(nullable = true)
     int transaction_amount;
     @Column(nullable = false)
     String transaction_type;
@@ -46,6 +46,17 @@ public class Transaction {
         this.transaction_type = transaction_type;
         this.transaction_date = transaction_date;
         this.admin_id = admin_id;
+        this.transaction_remark = transaction_remark;
+    }
+
+    public Transaction(int t_id, String transaction_id, String sender_account, String receiver_account, int transaction_amount, String transaction_type, String transaction_date, String transaction_remark) {
+        this.t_id = t_id;
+        this.transaction_id = transaction_id;
+        this.sender_account = sender_account;
+        this.receiver_account = receiver_account;
+        this.transaction_amount = transaction_amount;
+        this.transaction_type = transaction_type;
+        this.transaction_date = transaction_date;
         this.transaction_remark = transaction_remark;
     }
 

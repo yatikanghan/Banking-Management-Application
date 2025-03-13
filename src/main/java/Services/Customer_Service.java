@@ -346,8 +346,7 @@ public List<Support> findAllSupport() {
 
 //    transaction
 public List<Transaction> findallTransaction() {
-//        String sql = "select * from support";
-    String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support";
+    String sql = "select t_id, transaction_id, sender_account, receiver_account, transaction_amount, transaction_type, transaction_date, transaction_remark from transactions";
     RowMapper<Transaction> rm = new RowMapper<Transaction>() {
         @Override
         public Transaction mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -358,7 +357,6 @@ public List<Transaction> findallTransaction() {
                     resultSet.getInt("transaction_amount"),
                     resultSet.getString("transaction_type"),
                     resultSet.getString("transaction_date"),
-                    resultSet.getInt("admin_id"),
                     resultSet.getString("transaction_remark"));
 
 
