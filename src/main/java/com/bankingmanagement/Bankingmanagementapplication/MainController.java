@@ -529,6 +529,14 @@ public String adminacconfirm(
                 List<Transaction> mytransaction= new ArrayList<>();
                 for (Transaction transaction : alltransaction) {
                     if ((transaction.getReceiver_account().equals(String.valueOf(account.getAccount_id()))) || transaction.getSender_account().equals(String.valueOf(account.getAccount_id()))) {
+                        if (!transaction.getSender_account().equals("NA")){
+                            Account acc=customerService.findaccountrecodebyid(Integer.parseInt(transaction.getSender_account()));
+                            transaction.setSender_account(acc.getAccount_number());
+                        }
+                        if (!transaction.getReceiver_account().equals("NA")){
+                            Account acc=customerService.findaccountrecodebyid(Integer.parseInt(transaction.getReceiver_account()));
+                            transaction.setReceiver_account(acc.getAccount_number());
+                        }
                         mytransaction.add(transaction);
                     }
                 }
@@ -541,7 +549,7 @@ public String adminacconfirm(
             }
         }
         catch (NullPointerException e) {
-            return e.getMessage();
+            return "redirect:/customerloginpage";
         }
     }
 
@@ -821,12 +829,19 @@ public String adminacconfirm(
                 model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
 
                 List<Transaction> alltransaction=customerService.findallTransaction();
-                List<TransactionView> mytransaction= new ArrayList<>();
+                List<Transaction> mytransaction= new ArrayList<>();
                 for (Transaction transaction : alltransaction) {
                     if ((transaction.getReceiver_account().equals(String.valueOf(account.getAccount_id()))) || transaction.getSender_account().equals(String.valueOf(account.getAccount_id()))) {
-                        Account send= customerService.findaccountrecodebyid(Integer.parseInt(transaction.getSender_account()));
-                        Account receive= customerService.findaccountrecodebyid(Integer.parseInt(transaction.getReceiver_account()));
-                        mytransaction.add(new TransactionView(transaction, send.getAccount_number(), receive.getAccount_number()));
+
+                        if (!transaction.getSender_account().equals("NA")){
+                            Account acc=customerService.findaccountrecodebyid(Integer.parseInt(transaction.getSender_account()));
+                            transaction.setSender_account(acc.getAccount_number());
+                        }
+                        if (!transaction.getReceiver_account().equals("NA")){
+                            Account acc=customerService.findaccountrecodebyid(Integer.parseInt(transaction.getReceiver_account()));
+                            transaction.setReceiver_account(acc.getAccount_number());
+                        }
+                        mytransaction.add(transaction);
                     }
                 }
                 model.addAttribute("mytransaction", mytransaction);
