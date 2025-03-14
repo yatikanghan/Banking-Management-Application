@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Administration</title>
@@ -60,39 +60,8 @@
 
     </div>
     <br><br>
-    <div class="col-lg-10" style="margin-top: 0; padding: 0;">
+    <div class="col-lg-10">
 
-        <div class="container" style="margin-top: 0">
-            <div class="stheader"><h3><b>Customer Support</b></h3></div>
-
-            <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-<!--                <a href="/addstudentpage"><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Add Student </button></a>-->
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Support ID</th>
-                            <th>Subject</th>
-                            <th>Created At</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each = "supportlist: ${allsuportlist}">
-                            <td th:text="${supportlist.support_id}">Load...</td>
-                            <td th:text="${supportlist.support_title}">Load...</td>
-                            <td th:text="${supportlist.support_created_at}">Load...</td>
-                            <td th:text="${supportlist.support_status}">Load...</td>
-                            <td><a th:href="@{/adminsupport/{id}(id=${supportlist.support_id})}"><button type="button" class="btn btn-primary">Show</button></a>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
     </div>
 </div>
 </body>

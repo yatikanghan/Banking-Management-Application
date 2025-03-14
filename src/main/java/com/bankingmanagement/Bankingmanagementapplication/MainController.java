@@ -858,4 +858,15 @@ public String adminacconfirm(
 
     }
 
+//    customer fd
+
+    @RequestMapping("/customerfixeddeposit")
+    public String customerfixeddeposit(Model model, HttpSession session) {
+        return "customerfixeddeposit";
+    }
+
+    @RequestMapping("/adminfixdeposit")
+    public String adminfixeddeposit(Model model, HttpSession session) {
+        return "adminfixdeposit";
+    }
 }
