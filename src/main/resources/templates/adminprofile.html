@@ -73,7 +73,7 @@
                             <input type="number" th:value="${admin.admin_id}"  class="form-control" id="txtadminid" name="txtadminid" readonly>
                             <br>
                             <label for="txtadminname">Admin Name :</label>
-                            <input type="text" th:value="${admin.admin_name}" class="form-control" id="txtadminname" name="txtadminname" placeholder="Enter your first name">
+                            <input type="text" th:value="${admin.admin_name}" class="form-control" id="txtadminname" name="txtadminname" placeholder="Enter your first name" readonly>
                             <br>
                             <label for="txtadminemail">Email Address :</label>
                             <input type="email" th:value="${admin.admin_emailid}" class="form-control" id="txtadminemail" name="txtadminemail" placeholder="Enter your Email Address" readonly>
@@ -88,17 +88,12 @@
                             <input type="text" th:value="${admin.admin_created_at}" class="form-control" id="txtadminaccreated" name="txtadminaccreated" placeholder="Enter your last name" readonly>
                             <br>
                             <label for="txtadminrole">Admin Role :</label>
-                            <select class="form-control" id="txtadminrole" name="txtadminrole">
-                                <option value="Admin" th:selected="${admin.getAdmin_role() == 'Admin'}">Admin</option>
-                                <option value="Casher" th:selected="${admin.getAdmin_role() == 'Casher'}">Casher</option>
-                                <option value="Support" th:selected="${admin.getAdmin_role() == 'Support'}">Support</option>
-                            </select>
+                            <input type="text" th:value="${admin.getAdmin_role()}" class="form-control" id="txtadminrole" name="txtadminrole" readonly>
+
                             <br>
                             <label for="txtadminstatus">Admin Status :</label>
-                            <select class="form-control" id="txtadminstatus" name="txtadminstatus">
-                                <option value="Active" th:selected="${admin.getAdmin_status() == 'Active'}">Active</option>
-                                <option value="Deactive" th:selected="${admin.getAdmin_status() == 'Deactive'}">Deactive</option>
-                            </select>
+                            <input type="text" th:value="${admin.getAdmin_status()}" class="form-control" id="txtadminstatus" name="txtadminstatus" readonly>
+
                             <br>
                         </div>
                     </div>
@@ -107,7 +102,7 @@
                 </div>
                 <br><br>
                 <div class="accountconfirmbtn">
-                    <button type="submit" onclick="return confirm('Are you sure?')">Save</button>
+<!--                    <button type="submit" onclick="return confirm('Are you sure?')">Save</button>-->
                 </div>
                 <br>
 

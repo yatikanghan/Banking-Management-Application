@@ -33,7 +33,15 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                return "admindebit";
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
+
+                    return "admindebit";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+
             }else {
                 return "redirect:/adminlogin";
             }
@@ -77,23 +85,42 @@ public class MainController {
         List<Admin> adminlist=admin_services.findAlladmins();
         String adminid=null;
         Admin currentadmin=null;
+        String adminstatus=null;
         for (Admin admin : adminlist) {
             if ((admin.getAdmin_emailid().equals(adminemailid)) && (admin.getAdmin_password().equals(adminpassword))) {
                 adminid=String.valueOf(admin.getAdmin_id());
                 currentadmin=admin;
+                if (admin.getAdmin_status().equals("Active")) {
+
+                    adminstatus="Active";
+                }
+                else {
+                    adminstatus="Deactive";
+                }
             }
         }
         if (adminid!=null) {
-            session.setAttribute("adminid", adminid);
-            session.setAttribute("currentadmin", currentadmin);
-            return "redirect:/admindashboard";
+            if (adminstatus.equals("Active")) {
+
+                session.setAttribute("adminid", adminid);
+                session.setAttribute("currentadmin", currentadmin);
+                return "redirect:/admindashboard";
+            }
+            else {
+                return "redirect:/deactiveadmin";
+            }
 
         }
         else {
             model.addAttribute("error", "Invalid email or password");
-            return "admin_login";
+            return "adminlogin";
         }
 
+    }
+
+    @RequestMapping("/deactiveadmin")
+    public String deactiveadmin() {
+        return "deactiveadmin";
     }
 
     // admin debit
@@ -116,7 +143,7 @@ public class MainController {
 
                 }
                 catch (Exception e) {
-                    return e.getMessage();
+                    return "redirect:/customerloginpage";
                 }
                 return "redirect:/admindashboard";
             }else {
@@ -134,7 +161,13 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                return "adminwithdraw";
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
+
+                    return "adminwithdraw";                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
             }else {
                 return "redirect:/adminlogin";
             }
@@ -164,7 +197,7 @@ public class MainController {
 
                 }
                 catch (Exception e) {
-                    return e.getMessage();
+                    return "redirect:/customerloginpage";
                 }
                 return "redirect:/admindashboard";
             }else {
@@ -178,7 +211,24 @@ public class MainController {
 
     @RequestMapping("/admintransfer")
     public String admintransfer(Model model, HttpSession session) {
-        return "admintransfer";
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
+
+                    return "admintransfer";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
     }
 
 //    admin transfer money
@@ -213,7 +263,7 @@ public class MainController {
 
                 }
                 catch (Exception e) {
-                    return e.getMessage();
+                    return "redirect:/customerloginpage";
                 }
                 return "redirect:/admindashboard";
             }else {
@@ -226,10 +276,22 @@ public class MainController {
     }
 
     @RequestMapping("/admindashboard")
-    public String admindashboard(HttpSession session) {
+    public String admindashboard(HttpSession session, Model model) {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
+                List<Account> allaccounts=customerService.findallaccounts();
+                List<Customer> allcustomer=customerService.findallcustomers();
+                List<Admin> alladmin=admin_services.findAlladmins();
+                List<Support> allsupport=customerService.findPendingSupport();
+
+                model.addAttribute("allaccounts", allaccounts);
+                model.addAttribute("allcustomer", allcustomer);
+                model.addAttribute("alladmin", alladmin);
+                model.addAttribute("allsupport", allsupport);
+
+
+
                 return "admindashboard";
             }else {
                 return "redirect:/adminlogin";
@@ -280,6 +342,39 @@ public class MainController {
         }
     }
 
+    @PostMapping("/admindetailsave")
+    public String admindetailsave(Model model, HttpSession session, @RequestParam String txtadminid, @RequestParam String txtadminname, @RequestParam String txtadminrole, @RequestParam String txtadminstatus ) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                admin_services.updateadmin(txtadminid, txtadminname, txtadminrole, txtadminstatus);
+                return "redirect:/staff";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+
+    @PostMapping("/adminnewadminsave")
+    public String adminnewadminsave(Model model, HttpSession session,@RequestParam String txtadminemail,@RequestParam String txtadminpassword, @RequestParam String txtadminname, @RequestParam String txtadminrole, @RequestParam String txtadminstatus ) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                admin_services.adminaddstafffunction(txtadminemail,txtadminpassword, txtadminname, txtadminrole, txtadminstatus);
+                return "redirect:/staff";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
 
 
     @RequestMapping("/adminnewaccount")
@@ -287,16 +382,25 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                List<Account> allaccountlist=customerService.findallaccounts();
-                List<Customer> customers=new ArrayList<>();
-                for (Account account : allaccountlist) {
-                    if (account.getAccount_status().equals("Pending")) {
-                        customers.add(customerService.findrecodebyid(account.getCustomer_id()));
+
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if (currentadmin.getAdmin_role().equals("Admin")) {
+                    List<Account> allaccountlist=customerService.findallaccounts();
+                    List<Customer> customers=new ArrayList<>();
+                    for (Account account : allaccountlist) {
+                        if (account.getAccount_status().equals("Pending")) {
+                            customers.add(customerService.findrecodebyid(account.getCustomer_id()));
+                        }
                     }
+
+                    model.addAttribute("customers", customers);
+                    return "adminnewaccount";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
                 }
 
-                model.addAttribute("customers", customers);
-                return "adminnewaccount";
+
             }else {
                 return "redirect:/adminlogin";
             }
@@ -347,8 +451,32 @@ public String adminacconfirm(
     customerService.updatecustomer(String.valueOf(txtcustomer_id), txtcustomer_firstname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress, txtpostcode, txtcountry);
     customerService.updateaccount(String.valueOf(txtaccountid), txtactype, String.valueOf(txtbalance), txtacstatus);
 
-    return "admindashboard";
+    return "redirect:/adminmanageaccount";
 }
+
+    @PostMapping("/adminnewacconfirm")
+    public String adminnewacconfirm(
+            @RequestParam("txtcustomer_id") int txtcustomer_id,
+            @RequestParam("txtcustomer_firstname") String txtcustomer_firstname,
+            @RequestParam("txtlname") String txtlname,
+            @RequestParam("txtemail") String txtemail,
+            @RequestParam("txtpassword") String txtpassword,
+            @RequestParam("txtmobilenumber") String txtmobilenumber,
+            @RequestParam("txtaddress") String txtaddress,
+            @RequestParam("txtdob") String txtdob,
+            @RequestParam("txtpostcode") String txtpostcode,
+            @RequestParam("txtcountry") String txtcountry,
+            @RequestParam("txtaccount_id") int txtaccountid,
+            @RequestParam("txtactype") String txtactype,
+            @RequestParam("txtbalance") double txtbalance,
+            @RequestParam("txtacstatus") String txtacstatus,
+            Model model, HttpSession session) {
+
+        customerService.updatecustomer(String.valueOf(txtcustomer_id), txtcustomer_firstname, txtlname, txtemail, txtpassword, txtmobilenumber, txtdob, txtaddress, txtpostcode, txtcountry);
+        customerService.updateaccount(String.valueOf(txtaccountid), txtactype, String.valueOf(txtbalance), txtacstatus);
+
+        return "/adminnewaccount";
+    }
 
 
 //manage admin account
@@ -361,7 +489,10 @@ public String adminacconfirm(
                 List<AccountDetailView> accountdetailviewslist=new ArrayList<AccountDetailView>();
                 for (Customer customer : customers) {
                     Account account=customerService.findaccountrecodebyid(customer.getCustomer_id());
-                    accountdetailviewslist.add(new AccountDetailView(customer.getCustomer_id(), customer, account.getAccount_id(), account.getAccount_number(), account.getAccount_type(), account.getAccount_balance(), account.getAccount_status(), account.getAccount_created_at()));
+                    if (!(account.getAccount_status().equals("Pending"))) {
+
+                        accountdetailviewslist.add(new AccountDetailView(customer.getCustomer_id(), customer, account.getAccount_id(), account.getAccount_number(), account.getAccount_type(), account.getAccount_balance(), account.getAccount_status(), account.getAccount_created_at()));
+                    }
                 }
 
                 model.addAttribute("accountdetailviewslist", accountdetailviewslist);
@@ -762,7 +893,7 @@ public String adminacconfirm(
 
                 }
                 catch (Exception e) {
-                    return e.getMessage();
+                    return "redirect:/customerloginpage";
                 }
             }else {
                 return "redirect:/customerloginpage";
@@ -782,9 +913,15 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                List<Admin> adminlist=admin_services.findAlladmins();
-                model.addAttribute("adminlist", adminlist);
-                return "staff";
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if (currentadmin.getAdmin_role().equals("Admin")) {
+                    List<Admin> adminlist=admin_services.findAlladmins();
+                    model.addAttribute("adminlist", adminlist);
+                    return "staff";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
             }else {
                 return "redirect:/adminlogin";
             }
@@ -793,6 +930,46 @@ public String adminacconfirm(
             return "redirect:/adminlogin";
         }
     }
+
+
+    @RequestMapping("/addstaff")
+    public String addstaff(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+
+                return "addstaff";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+    @GetMapping("/staff/{id}")
+    public String staffdetail(@PathVariable Integer id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                model.addAttribute("admin", admin_services.getAdminById(Integer.parseInt(adminid)));
+//                return "adminprofile";
+                Admin admin=admin_services.getAdminById(id);
+                model.addAttribute("admin", admin);
+                return "staffdetail";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
+
+
+
     @RequestMapping("/registeraccount")
     public class CustomerRegistrationController {
 
@@ -853,7 +1030,7 @@ public String adminacconfirm(
             }
         }
         catch (NullPointerException e) {
-            return e.getMessage();
+            return "redirect:/customerloginpage";
         }
 
     }
@@ -862,11 +1039,48 @@ public String adminacconfirm(
 
     @RequestMapping("/customerfixeddeposit")
     public String customerfixeddeposit(Model model, HttpSession session) {
-        return "customerfixeddeposit";
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                return "customerfixeddeposit";
+
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
     }
 
     @RequestMapping("/adminfixdeposit")
     public String adminfixeddeposit(Model model, HttpSession session) {
-        return "adminfixdeposit";
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                return "adminfixdeposit";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
+
+    @RequestMapping("/accessdeniedpage")
+    public String accessdeniedpage(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                return "accessdenied";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
     }
 }

@@ -322,6 +322,28 @@ public List<Support> findAllSupport() {
 
     return template.query(sql, rm);
 }
+    public List<Support> findPendingSupport() {
+//        String sql = "select * from support";
+        String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support where support_status='Pending'";
+        RowMapper<Support> rm = new RowMapper<Support>() {
+            @Override
+            public Support mapRow(ResultSet resultSet, int i) throws SQLException {
+                Support support = new Support(resultSet.getInt("support_id"),
+                        resultSet.getInt("customer_id"),
+                        resultSet.getInt("account_id"),
+                        resultSet.getString("support_title"),
+                        resultSet.getString("support_desc"),
+                        resultSet.getString("support_created_at"),
+                        resultSet.getInt("admin_id"),
+                        resultSet.getString("support_status"));
+
+
+                return support;
+            }
+        };
+
+        return template.query(sql, rm);
+    }
 
     public Support findSupportRecodebyid(int id) {
         String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support where support_id=?";
