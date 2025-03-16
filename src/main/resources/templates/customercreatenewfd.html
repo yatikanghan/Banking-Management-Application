@@ -44,7 +44,6 @@
 
         <a href="/profile">Profile</a>
 
-
       </div>
 
     </div>
@@ -52,46 +51,38 @@
   </div>
   <br><br>
   <div class="col-lg-10">
-    <div class="container">
-      <div class="row">
-          <h2>Fixed Deposit</h2>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-          <a href="/createnewfd"><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Create New FD </button></a>
-          <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                <tr>
-                  <th>FD ID</th>
-                  <th>Principle Amount</th>
-                  <th>Maturity Amount</th>
-                  <th>Strat Date</th>
-                  <th>Maturity Date</th>
-                  <th>Interest Rate</th>
-                  <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each = "fd: ${myfds}">
-                  <td th:text="${fd.id}">Load...</td>
-                  <td th:text="${fd.principalAmount}">Load...</td>
-                  <td th:text="${fd.maturityAmount}">Load...</td>
-                  <td th:text="${fd.startDate}">Load...</td>
-                  <td th:text="${fd.maturityDate}">Load...</td>
-                  <td th:text="${fd.interestRate}">Load...</td>
-                  <td th:text="${fd.status}">Load...</td>
-                </tr>
+    <div class="container" style="margin-top: 0">
+      <div class="stheader"><h3><b>Create New Fixed Deposit</b></h3></div>
+      <br><br>
+      <form action="/createnewfdbtn" method="post">
+        <div class="row">
+          <br>
+          <br>
+          <div class="col-lg-6 col-sm-12 col-md-12">
+            <div class="form-group">
+              <label for="txtfdamount">Amount :</label>
+              <input type="number" class="form-control" id="txtfdamount" name="txtfdamount" placeholder="Enter Amount">
+              <p th:text="${balanceerror}"></p>
+              <br><br>
+              <label for="txttenure">Tenure ( IN MONTHS ) :</label>
+              <input type="number" class="form-control" id="txttenure" name="txttenure" placeholder="Enter Tenure in Months">
+              <br>
 
-                </tbody>
-              </table>
+
             </div>
           </div>
+          <br>
+          <br>
         </div>
-      </div>
+        <br><br>
+        <div class="accountconfirmbtn" style="float: left">
+          <button type="submit" onclick="return confirm('Are you sure?')">Create Now</button>
+        </div>
+        <br>
+
+      </form>
+
+
     </div>
   </div>
 </div>

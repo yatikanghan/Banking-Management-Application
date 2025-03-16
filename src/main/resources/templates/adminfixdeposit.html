@@ -61,7 +61,48 @@
     </div>
     <br><br>
     <div class="col-lg-10">
+        <div class="container">
+            <div class="row">
+                <h2>Fixed Deposit</h2>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+<!--                    <a href="/createnewfd"><button type="button" class="btn btn-primary" style="margin-bottom: 10px; padding: 6px 30px;"> + Create New FD </button></a>-->
+                    <div class="mainrow" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>FD ID</th>
+                                    <th>Principle Amount</th>
+                                    <th>Maturity Amount</th>
+                                    <th>Strat Date</th>
+                                    <th>Maturity Date</th>
+                                    <th>Interest Rate</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each = "fd: ${allfds}">
+                                    <td th:text="${fd.id}">Load...</td>
+                                    <td th:text="${fd.principalAmount}">Load...</td>
+                                    <td th:text="${fd.maturityAmount}">Load...</td>
+                                    <td th:text="${fd.startDate}">Load...</td>
+                                    <td th:text="${fd.maturityDate}">Load...</td>
+                                    <td th:text="${fd.interestRate}">Load...</td>
+                                    <td th:text="${fd.status}">Load...</td>
+                                    <td><a th:href="@{/adminfixdeposit/{id}(id=${fd.id})}"><button type="button" class="btn btn-primary">Detail</button></a></td>
+                                </tr>
 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

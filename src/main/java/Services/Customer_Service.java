@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -389,6 +390,90 @@ public List<Transaction> findallTransaction() {
     return template.query(sql, rm);
 }
 
+
+//    fd
+    public int addnewfixeddeposit(int accountId, double principalAmount, double interestRate, int tenure, String status) {
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate maturityDate = startDate.plusMonths(tenure);
+        double maturityAmount = principalAmount + (principalAmount * (interestRate / 100) * (tenure / 12.0));
+        java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
+        java.sql.Date sqlMaturityDate = java.sql.Date.valueOf(maturityDate);
+
+        String sql = "INSERT INTO fixeddeposit (account_id, principalAmount, interestRate, tenure, startDate, maturityDate, maturityAmount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        return template.update(sql, accountId, principalAmount, interestRate, tenure, sqlStartDate, sqlMaturityDate, maturityAmount, status);
+    }
+    public List<FixedDeposit> findallfixeddeposit() {
+
+
+        String sql = "SELECT id, account_id, principalAmount, interestRate, tenure, startDate, maturityDate, maturityAmount, status FROM fixeddeposit";
+        RowMapper<FixedDeposit> rm = new RowMapper<FixedDeposit>() {
+            @Override
+            public FixedDeposit mapRow(ResultSet resultSet, int i) throws SQLException {
+                FixedDeposit fd = new FixedDeposit("",
+                        resultSet.getLong("id"),
+                        resultSet.getInt("account_id"),
+                        resultSet.getDouble("principalAmount"),
+                        resultSet.getDouble("interestRate"),
+                        resultSet.getInt("tenure"),
+                        resultSet.getDate("startDate").toLocalDate(),
+                        resultSet.getDate("maturityDate").toLocalDate(),
+                        resultSet.getDouble("maturityAmount"),
+                        resultSet.getString("status")
+                );
+
+
+                return fd;
+            }
+        };
+
+        return template.query(sql, rm);
+
+
+    }
+
+
+    public FixedDeposit findfixeddepositbyid(int id) {
+
+
+        String sql = "SELECT id, account_id, principalAmount, interestRate, tenure, startDate, maturityDate, maturityAmount, status FROM fixeddeposit where id=?";
+
+        return template.queryForObject(sql, new Object[]{id}, new RowMapper<FixedDeposit>() {
+            @Override
+            public FixedDeposit mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                FixedDeposit fd = new FixedDeposit("",
+                        resultSet.getLong("id"),
+                        resultSet.getInt("account_id"),
+                        resultSet.getDouble("principalAmount"),
+                        resultSet.getDouble("interestRate"),
+                        resultSet.getInt("tenure"),
+                        resultSet.getDate("startDate").toLocalDate(),
+                        resultSet.getDate("maturityDate").toLocalDate(),
+                        resultSet.getDouble("maturityAmount"),
+                        resultSet.getString("status"));
+
+
+                return fd;
+            }
+        });
+
+    }
+
+
+    public int closedfixeddeposit(FixedDeposit fd, Account account) {
+        String sql = "UPDATE fixeddeposit SET status='Closed' WHERE id=(?)";
+        admindepositmoney(account, String.valueOf(account.getAccount_id()),fd.getPrincipalAmount(), "Deposit","Fixed Deposit Closed");
+
+        return template.update(sql, fd.getId());
+    }
+
+    public int maturedfixeddeposit(FixedDeposit fd, Account account) {
+        String sql = "UPDATE fixeddeposit SET status='Matured' WHERE id=(?)";
+        admindepositmoney(account, String.valueOf(account.getAccount_id()),fd.getMaturityAmount(), "Deposit","Fixed Deposit Matured");
+
+        return template.update(sql, fd.getId());
+    }
 
 
 }

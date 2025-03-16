@@ -129,23 +129,32 @@ public class MainController {
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                try {
-                    Account raccount=customerService.findaccountrecodebyacnumber(txtaccountnumber);
-                    if (raccount!=null) {
-                        model.addAttribute("acnotfound", "");
-                        customerService.admindepositmoney(raccount, String.valueOf(raccount.getAccount_id()), Double.parseDouble(txtamount), "Deposit", txtremark);
-                    }
-                    else {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
+                    try {
+                        Account raccount=customerService.findaccountrecodebyacnumber(txtaccountnumber);
+                        if (raccount!=null) {
+                            model.addAttribute("acnotfound", "");
+                            customerService.admindepositmoney(raccount, String.valueOf(raccount.getAccount_id()), Double.parseDouble(txtamount), "Deposit", txtremark);
+                            return "redirect:/admindashboard";
+                        }
+                        else {
 
-                        model.addAttribute("acnotfound", "Account not found");
-                        return "admindebit";
-                    }
+                            model.addAttribute("acnotfound", "Account not found");
+                            return "admindebit";
+                        }
 
+                    }
+                    catch (Exception e) {
+                        return "redirect:/customerloginpage";
+                    }
+                                  }
+                else {
+                    return "redirect:/accessdeniedpage";
                 }
-                catch (Exception e) {
-                    return "redirect:/customerloginpage";
-                }
-                return "redirect:/admindashboard";
+
+
+
             }else {
                 return "redirect:/adminlogin";
             }
@@ -176,6 +185,8 @@ public class MainController {
             return "redirect:/adminlogin";
         }
     }
+
+
 
     // admin debit
     @PostMapping("/adminwithdrawamount")
@@ -284,7 +295,14 @@ public class MainController {
                 List<Customer> allcustomer=customerService.findallcustomers();
                 List<Admin> alladmin=admin_services.findAlladmins();
                 List<Support> allsupport=customerService.findPendingSupport();
-
+                List<FixedDeposit> allfixeddeposit=customerService.findallfixeddeposit();
+                List<FixedDeposit> activefd=new ArrayList<>();
+                for(FixedDeposit fd:allfixeddeposit) {
+                    if (fd.getStatus().equals("Active")){
+                        activefd.add(fd);
+                    }
+                }
+                model.addAttribute("activefd",activefd);
                 model.addAttribute("allaccounts", allaccounts);
                 model.addAttribute("allcustomer", allcustomer);
                 model.addAttribute("alladmin", alladmin);
@@ -528,10 +546,29 @@ public String adminacconfirm(
     //    admin support
     @RequestMapping("/adminsupport")
     public String adminsupport(Model model, HttpSession session) {
-        List<Support> allsuportlist=admin_services.findAllSupport();
-        model.addAttribute("allsuportlist", allsuportlist);
 
-        return "adminsupport";
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
+                    List<Support> allsuportlist=admin_services.findAllSupport();
+                    model.addAttribute("allsuportlist", allsuportlist);
+
+                    return "adminsupport";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+
     }
 
     @GetMapping("/adminsupport/{id}")
@@ -539,14 +576,23 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                Support support = admin_services.findSupportRecodebyid(id);
-                model.addAttribute("support", support);
-                Customer customer = customerService.findrecodebyid(support.getCustomer_id());
-                model.addAttribute("customer", customer);
-                Account account=customerService.findaccountrecodebycustomerid(support.getCustomer_id());
-                model.addAttribute("account", account);
 
-                return "adminsupportdetail";
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
+                    Support support = admin_services.findSupportRecodebyid(id);
+                    model.addAttribute("support", support);
+                    Customer customer = customerService.findrecodebyid(support.getCustomer_id());
+                    model.addAttribute("customer", customer);
+                    Account account=customerService.findaccountrecodebycustomerid(support.getCustomer_id());
+                    model.addAttribute("account", account);
+
+                    return "adminsupportdetail";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+
+
             }else {
                 return "redirect:/adminlogin";
             }
@@ -562,9 +608,15 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                admin_services.deletesupportrecodebyid(id);
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
+                    admin_services.deletesupportrecodebyid(id);
 
-                return "redirect:/adminsupport";
+                    return "redirect:/adminsupport";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
             }else {
                 return "redirect:/adminlogin";
             }
@@ -579,9 +631,17 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                admin_services.solvesupportrecodebyid(id, Integer.parseInt(adminid));
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
+                    admin_services.solvesupportrecodebyid(id, Integer.parseInt(adminid));
 
-                return "redirect:/adminsupport";
+                    return "redirect:/adminsupport";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+
+
             }else {
                 return "redirect:/adminlogin";
             }
@@ -656,6 +716,16 @@ public String adminacconfirm(
                 model.addAttribute("acbalance", "€ "+account.getAccount_balance());
                 model.addAttribute("customername", customer.getCustomer_firstname() + " " + customer.getCustomer_lastname());
 
+                List<FixedDeposit> allfds=customerService.findallfixeddeposit();
+                List<FixedDeposit> myfds=new ArrayList<>();
+                for (FixedDeposit fds : allfds) {
+                    if (fds.getAccountId()==account.getAccount_id()) {
+                        if (fds.getStatus().equals("Active")){
+                            myfds.add(fds);
+                        }
+                    }
+                }
+                model.addAttribute("myfds",myfds);
                 List<Transaction> alltransaction=customerService.findallTransaction();
                 List<Transaction> mytransaction= new ArrayList<>();
                 for (Transaction transaction : alltransaction) {
@@ -1042,6 +1112,15 @@ public String adminacconfirm(
         try {
             String custid=session.getAttribute("custid").toString();
             if (custid!=null) {
+                Account myaccount=customerService.findaccountrecodebycustomerid(Integer.parseInt(custid));
+                List<FixedDeposit> allfds=customerService.findallfixeddeposit();
+                List<FixedDeposit> myfds= new ArrayList<>();
+                for (FixedDeposit fd : allfds){
+                    if (myaccount.getAccount_id()==fd.getAccountId()){
+                        myfds.add(fd);
+                    }
+                }
+                model.addAttribute("myfds",myfds);
                 return "customerfixeddeposit";
 
             }else {
@@ -1058,6 +1137,8 @@ public String adminacconfirm(
         try {
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
+                List<FixedDeposit> allfds=customerService.findallfixeddeposit();
+                model.addAttribute("allfds",allfds);
                 return "adminfixdeposit";
             }else {
                 return "redirect:/adminlogin";
@@ -1068,6 +1149,45 @@ public String adminacconfirm(
         }
 
     }
+    @GetMapping("/adminfixdeposit/{id}")
+    public String adminfixdepositdetail(@PathVariable Integer id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                FixedDeposit fd=customerService.findfixeddepositbyid(id);
+                Account thisaccount=customerService.findaccountrecodebyid(fd.getAccountId());
+                model.addAttribute("thisaccount", thisaccount);
+                model.addAttribute("fd", fd);
+                return "/adminfddetail";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
+
+    @PostMapping("/adminfdclosed")
+    public String customertransfermoney(Model model, @RequestParam String txtfdid, HttpSession session, @RequestParam String txtpamount) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                FixedDeposit fd=customerService.findfixeddepositbyid(Integer.parseInt(txtfdid));
+                Account thisaccount=customerService.findaccountrecodebyid(fd.getAccountId());
+                customerService.closedfixeddeposit(fd, thisaccount);
+                return "redirect:/adminfixdeposit";
+
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
 
     @RequestMapping("/accessdeniedpage")
     public String accessdeniedpage(Model model, HttpSession session) {
@@ -1083,4 +1203,48 @@ public String adminacconfirm(
             return "redirect:/adminlogin";
         }
     }
+
+
+//    fd
+    @RequestMapping("/createnewfd")
+    public String createnewfd(Model model, HttpSession session) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+
+                return "customercreatenewfd";
+
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
+
+    @PostMapping("/createnewfdbtn")
+    public String createnewfdbtn(Model model, HttpSession session, @RequestParam String txtfdamount, @RequestParam String txttenure) {
+        try {
+            String custid=session.getAttribute("custid").toString();
+            if (custid!=null) {
+                Customer mycustomer=customerService.findrecodebyid(Integer.parseInt(custid));
+                Account myaccount=customerService.findaccountrecodebycustomerid(Integer.parseInt(custid));
+                if (Double.parseDouble(myaccount.getAccount_balance()) < Double.parseDouble(txtfdamount)) {
+                    model.addAttribute("balanceerror", "Insufficient balance");
+                    return "customercreatenewfd";
+                }
+                customerService.adminwithdrawmoney(myaccount, String.valueOf(myaccount.getAccount_id()), Double.parseDouble(txtfdamount), "Withdraw", "Create New Fixed Deposit");
+                customerService.addnewfixeddeposit(myaccount.getAccount_id(), Double.parseDouble(txtfdamount),Double.parseDouble("6"), Integer.parseInt(txttenure),"Active");
+                return "redirect:/customerfixeddeposit";
+            }else {
+                return "redirect:/customerloginpage";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/customerloginpage";
+        }
+    }
+
 }

@@ -69,10 +69,10 @@
                     <div class="col-lg-6">
                         <div class="dashboardcard">
                             <h5>Fixed Deposit</h5>
-                            <h4>0000000000</h4>
+                            <h4 th:text="${account.account_number}">0000000000</h4>
 
-                            <h3>€ 00</h3>
-                            <h6>Balance available</h6>
+                            <h3 th:text="${myfds.size()}"></h3>
+                            <h6>Active Fixed Deposit</h6>
                         </div>
                     </div>
                 </div>

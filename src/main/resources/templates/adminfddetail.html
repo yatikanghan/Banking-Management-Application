@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div class="admin_header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="logo" style="margin-left: 18px">
+                    <img src="/images/white_logo.png" alt="" height="50px" style="float: left;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="adminmenu" style="float: right;">
+                    <a href="/adminlogout">Logout <span><img src="/images/out.png" alt="logout" height="25px"></span> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 0; padding: 0;">
+    <div class="col-lg-2" style="background-color: #191919; height: 100vh;">
+        <div class="admin_sidebar_menu">
+            <div>
+                <h3 style="font-family: math; color: white">Administration</h3>
+            </div>
+            <div>
+                <br>
+                <a href="/admindashboard">Dashboard</a>
+
+                <a href="/adminmanageaccount">Account</a>
+
+                <a href="/adminnewaccount">Account Openning</a>
+
+                <a href="/adminfixdeposit">Fixed Deposit</a>
+
+                <a href="/admintransfer">Transfer</a>
+
+                <a href="/admindebit">Deposit</a>
+
+                <a href="/adminwithdraw">Withdraw</a>
+
+                <a href="/staff">Manage Employee</a>
+
+                <a href="/adminsupport">Contact Us</a>
+
+                <a href="/adminprofile">Admin Profile</a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <br><br>
+    <div class="col-lg-10">
+        <div class="container" style="margin-top: 0">
+            <br>
+            <form action="/adminfdclosed" method="post">
+                <div class="row">
+                    <h3><b>Fixed Deposit</b></h3>
+                    <br>
+                    <br>
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="txtfdid">FD ID :</label>
+                            <input type="number" th:value="${fd.id}"  class="form-control" id="txtfdid" name="txtfdid" readonly>
+                            <br>
+                            <label for="txtacnum">Account Number :</label>
+                            <input type="text" th:value="${thisaccount.account_number}" class="form-control" id="txtacnum" name="txtacnum" placeholder="Enter your first name" readonly>
+                            <br>
+                            <label for="txtpamount">Principle Amount :</label>
+                            <input type="email" th:value="${fd.principalAmount}" class="form-control" id="txtpamount" name="txtpamount" placeholder="Enter your Email Address" readonly>
+                            <br>
+                            <label for="txtinterestrate">Interest Rate :</label>
+                            <input type="text" th:value="${fd.interestRate}" class="form-control" id="txtinterestrate" name="txtinterestrate" placeholder="Enter your Email Address" readonly>
+                            <br>
+                            <label for="txttenure">Tenure :</label>
+                            <input type="text" th:value="${fd.tenure}" class="form-control" id="txttenure" name="txttenure" placeholder="Enter your Email Address" readonly>
+                            <br>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="txtstartdate">Start Date :</label>
+                            <input type="text" th:value="${fd.startDate}" class="form-control" id="txtstartdate" name="txtstartdate" placeholder="Enter your last name" readonly>
+                            <br>
+                            <label for="txtmaturitydate">Maturity Date :</label>
+                            <input type="text" th:value="${fd.maturityDate}" class="form-control" id="txtmaturitydate" name="txtmaturitydate" placeholder="Enter your last name" readonly>
+                            <br>
+                            <label for="txtmaturityamount">Maturity Amount :</label>
+                            <input type="text" th:value="${fd.maturityAmount}" class="form-control" id="txtmaturityamount" name="txtmaturityamount" placeholder="Enter your last name" readonly>
+                            <br>
+                            <label for="txtstatus">Status :</label>
+                            <input type="text" th:value="${fd.status}" class="form-control" id="txtstatus" name="txtstatus" placeholder="Enter your last name" readonly>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <br><br>
+                <div class="accountconfirmbtn" th:if="${fd.status == 'Active'}">
+                    <button type="submit" onclick="return confirm('Are you sure?')">Closed Fixed Deposit</button>
+                </div>
+                <br>
+
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
