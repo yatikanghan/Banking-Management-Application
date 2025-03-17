@@ -691,10 +691,15 @@ public String adminacconfirm(
                 session.setAttribute("custid", custid);
                 session.setAttribute("currentcustomer", currentcustomer);
                 return "redirect:/customerdashboard";
-            }
-            else{
-                return "redirect:/customerpendingpage";
+            } else if (currentaccount.getAccount_status().equals("Pending")) {
 
+                return "redirect:/customerpendingpage";
+            } else if (currentaccount.getAccount_status().equals("Closed")) {
+
+                return "redirect:/customerclosedpage";
+            } else{
+
+                return "redirect:/customerdeactivepage";
             }
 
         }
@@ -703,6 +708,18 @@ public String adminacconfirm(
             return "customerlogin";
         }
     }
+
+    @RequestMapping("/customerclosedpage")
+    public String customerclosedpage(Model model, HttpSession session) {
+        return "customerclosedpage";
+    }
+
+    @RequestMapping("/customerdeactivepage")
+    public String customerdeactivepage(Model model, HttpSession session) {
+        return "customerdeactivepage";
+    }
+
+
 
     @RequestMapping("/customerdashboard")
     public String customerdashboard(Model model, HttpSession session) {

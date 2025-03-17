@@ -8,7 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body oncontextmenu="return false">
 <div class="admin_header">
     <div class="container-fluid">
         <div class="row">
@@ -146,7 +146,9 @@
                 <div class="support_stat">
                     <a th:href="@{/adminsupportdelete/{id}(id=${support.support_id})}"><button class="btn btn-danger"> Delete Query </button></a>
 
-                    <a th:href="@{/adminsupportresolve/{id}(id=${support.support_id})}"><button class="btn btn-primary"> Resolve Query </button></a>
+                    <span th:if="${support.getSupport_status().equals('Pending')}">
+                        <a th:href="@{/adminsupportresolve/{id}(id=${support.support_id})}"><button class="btn btn-primary"> Resolve Query </button></a>
+                    </span>
                 </div>
             </div>
         </div>

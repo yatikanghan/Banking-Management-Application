@@ -35,6 +35,7 @@ admin_role varchar(50) not null,
 admin_status varchar(50) not null,
 admin_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+Insert into admin (admin_emailid,admin_password,admin_name,admin_role,admin_status) values("admin@gmail.com","admin123","Yatik Anghan","Admin","Active");
 
 create table support(
 support_id int auto_increment primary key,
@@ -63,41 +64,60 @@ CREATE TABLE transactions (
     FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
 );
 
+CREATE TABLE fixeddeposit (
+	id int auto_increment PRIMARY KEY,
+    account_id INT NOT NULL,
+    principalAmount DOUBLE NOT NULL,
+    interestRate DOUBLE NOT NULL,
+    tenure INT NOT NULL,
+    startDate DATE NOT NULL,
+    maturityDate DATE NOT NULL,
+    maturityAmount DOUBLE NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id)
+);
 
-select * from transactions;
-select t_id, transaction_id, sender_account, receiver_account, transaction_amount, transaction_type, transaction_date, transaction_remark from transactions;
 
-SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_number = "1000000001";
 
-select * from support;
 
-INSERT INTO transactions (transaction_id,receiver_account,transaction_amount,transaction_type,transaction_remark) VALUES("1","100000001",100,"Debit","this is remark");
+-- select * from fixeddeposit;
+-- SELECT id, account_id, principalAmount, interestRate, tenure, startDate, maturityDate, maturityAmount, status FROM fixeddeposit;
 
+-- select t_id, transaction_id, sender_account, receiver_account, transaction_amount, transaction_type, transaction_date, transaction_remark from transactions;
+
+-- SELECT account_id, customer_id, account_number, account_type, account_balance, account_status, account_created_at FROM account WHERE account_number = "1000000001";
+
+-- select * from support;
+
+
+-- INSERT INTO transactions (transaction_id,receiver_account,transaction_amount,transaction_type,transaction_remark) VALUES("1","100000001",100,"Debit","this is remark");
+-- select * from transactions;
 
 -- INSERT INTO support (customer_id,account_id,support_title,support_desc,support_status)
 -- values(1,1,"account","reset password","Pending");
 
-use bankingmanagement;
-select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support;
+-- use bankingmanagement;
+-- select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support;
 
-Insert into admin (admin_emailid,admin_password,admin_name,admin_role,admin_status) values("admin@gmail.com","admin123","Yatik Anghan","Admin","Active");
 
-insert into customers(customer_firstname,customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country) 
-values("Yatik","Anghan","yatikanghan01@gmail.com","123456789","+4917663116950", "08-08-2003","Bornimer Str. 09","10711","Germany"); 
 
-insert into account(customer_id, account_number, account_type, account_balance, account_status)
-values("1","1000000001", "Saving Account","0", "Active");
+-- insert into customers(customer_firstname,customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country) 
+-- values("Yatik","Anghan","yatikanghan01@gmail.com","123456789","+4917663116950", "08-08-2003","Bornimer Str. 09","10711","Germany"); 
 
-select * from admin;
-update admin set admin_name="Yatik", admin_role="Admin", admin_status="Active" where admin_id=1;
+-- insert into account(customer_id, account_number, account_type, account_balance, account_status)
+-- values("1","1000000001", "Saving Account","0", "Active");
+
+-- select * from admin;
+-- update admin set admin_name="Yatik", admin_role="Admin", admin_status="Active" where admin_id=1;
 
 
 -- update account set account_status="Pending" where account_id=1;
 -- select * from customers;
 -- select * from account;
 -- select * from admin;
+-- select * from support;
 
-SELECT * FROM account WHERE account_id = 1;
+-- SELECT * FROM account WHERE account_id = 1;
 
 -- SELECT customer_id, customer_firstname, customer_lastname, customer_emailid, customer_password, customer_mobile, customer_dob, customer_address, customer_postcode, customer_country FROM customers WHERE customer_emailid = "meet@gmail.com";
 

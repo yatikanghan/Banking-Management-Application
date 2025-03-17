@@ -8,7 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body oncontextmenu="return false">
 <div class="admin_header">
     <div class="container-fluid">
         <div class="row">
@@ -71,14 +71,14 @@
                             <div class="col-lg-6 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="txtaccountnumber">Account Number :</label>
-                                    <input type="number" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter Account Number">
+                                    <input type="number" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter Account Number" required>
                                     <p th:text="${acnotfound}"></p>
                                     <br>
                                     <label for="txtamount">Amount :</label>
-                                    <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
+                                    <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount" required>
                                     <br>
                                     <label for="txtremark">Remark :</label>
-                                    <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
+                                    <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here" required>
                                     <br>
 
 
