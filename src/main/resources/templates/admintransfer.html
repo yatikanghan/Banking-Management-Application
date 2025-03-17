@@ -72,20 +72,20 @@
                         <div class="col-lg-6 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label for="txtsenderaccount">Sender Account Number :</label>
-                                <input type="number" class="form-control" id="txtsenderaccount" name="txtsenderaccount" placeholder="Enter Account Number">
+                                <input type="number" class="form-control" id="txtsenderaccount" name="txtsenderaccount" placeholder="Enter Account Number" required>
                                 <p th:text="${senderacnotfound}"></p>
                                 <br>
                                 <label for="txtreceiveraccount">Receiver Account Number :</label>
-                                <input type="number" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number">
+                                <input type="number" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number" required>
                                 <p th:text="${receiveracnotfound}"></p>
                                 <br>
                                 <label for="txtamount">Withdraw Amount :</label>
-                                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
+                                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount" required>
                                 <p th:text="${balanceerr}"></p>
                                 <br>
 
                                 <label for="txtremark">Remark :</label>
-                                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
+                                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here" required>
                                 <br>
 
 

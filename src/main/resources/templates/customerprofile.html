@@ -63,7 +63,7 @@
                             <input type="number" th:value="${customer.getCustomer_id()}"  class="form-control" id="txtcustomer_id" name="txtcustomer_id" readonly>
                             <br>
                             <label for="txtcustomer_firstname">First Name :</label>
-                            <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtcustomer_firstname" name="txtcustomer_firstname" placeholder="Enter your first name">
+                            <input type="text" th:value="${customer.getCustomer_firstname()}" class="form-control" id="txtcustomer_firstname" name="txtcustomer_firstname" placeholder="Enter your first name" required>
                             <br>
                             <label for="txtemail">Email Address :</label>
                             <input type="email" th:value="${customer.getCustomer_emailid()}" class="form-control" id="txtemail" name="txtemail" placeholder="Enter your Email Address" readonly>
@@ -72,10 +72,10 @@
                             <input type="date" th:value="${customer.getCustomer_dob()}" class="form-control" id="txtdob" name="txtdob" placeholder="Enter your Date of Birth" readonly>
                             <br>
                             <label for="txtmobilenumber">Mobile Number :</label>
-                            <input type="text" th:value="${customer.getCustomer_mobile()}" class="form-control" id="txtmobilenumber" name="txtmobilenumber" placeholder="Enter your mobile number" >
+                            <input type="text" th:value="${customer.getCustomer_mobile()}" class="form-control" id="txtmobilenumber" name="txtmobilenumber" placeholder="Enter your mobile number" required>
                             <br>
                             <label for="txtactype">Account Type :</label>
-                            <input type="text" th:value="${account.getAccount_type()}" class="form-control" id="txtactype" name="txtactype" disabled>
+                            <input type="text" th:value="${account.getAccount_type()}" class="form-control" id="txtactype" name="txtactype" readonly>
                             <br>
 
                         </div>
@@ -86,20 +86,20 @@
                             <input type="text" th:value="${account.getAccount_number()}" class="form-control" id="txtaccountnumber" name="txtaccountnumber" placeholder="Enter your last name" readonly>
                             <br>
                             <label for="txtlname">Last Name :</label>
-                            <input type="text" th:value="${customer.getCustomer_lastname()}" class="form-control" id="txtlname" name="txtlname" placeholder="Enter your last name">
+                            <input type="text" th:value="${customer.getCustomer_lastname()}" class="form-control" id="txtlname" name="txtlname" placeholder="Enter your last name" required>
                             <br>
 
                             <label for="txtaddress">Address :</label>
-                            <input type="text" th:value="${customer.getCustomer_address()}" class="form-control" id="txtaddress" name="txtaddress" placeholder="Enter your Address">
+                            <input type="text" th:value="${customer.getCustomer_address()}" class="form-control" id="txtaddress" name="txtaddress" placeholder="Enter your Address" required>
                             <br>
                             <label for="txtpostcode">Postal Code :</label>
-                            <input type="text" th:value="${customer.getCustomer_postcode()}" class="form-control" id="txtpostcode" name="txtpostcode" placeholder="Enter your postal code">
+                            <input type="text" th:value="${customer.getCustomer_postcode()}" class="form-control" id="txtpostcode" name="txtpostcode" placeholder="Enter your postal code" required>
                             <br>
                             <label for="txtcountry">Country :</label>
-                            <input type="text" th:value="${customer.getCustomer_country()}" class="form-control" id="txtcountry" name="txtcountry" placeholder="Enter your Country">
+                            <input type="text" th:value="${customer.getCustomer_country()}" class="form-control" id="txtcountry" name="txtcountry" placeholder="Enter your Country" required>
                             <br>
                             <label for="txtaccountopenning">Account Openning Date :</label>
-                            <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" disabled>
+                            <input type="text" th:value="${account.getAccount_created_at()}" class="form-control" id="txtaccountopenning" name="txtaccountopenning" readonly>
                             <br>
                             <br>
                             <br>

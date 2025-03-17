@@ -79,7 +79,7 @@
               <input type="email" th:value="${customer.getCustomer_emailid()}" class="form-control" id="txtemail" name="txtemail" placeholder="Enter your Email Address" readonly>
               <br>
               <label for="txtpassword">Password :</label>
-              <input type="password" th:value="${customer.getCustomer_password()}" class="form-control" id="txtpassword" name="txtpassword" placeholder="Enter your Password">
+              <input type="password" th:value="${customer.getCustomer_password()}" class="form-control" id="txtpassword" name="txtpassword" placeholder="Enter your Password" required>
               <br>
               <label for="txtdob">Date of Birth :</label>
               <input type="date" th:value="${customer.getCustomer_dob()}" class="form-control" id="txtdob" name="txtdob" placeholder="Enter your Date of Birth" readonly>

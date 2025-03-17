@@ -64,22 +64,22 @@
             <div class="col-lg-6 col-sm-12 col-md-12">
               <div class="form-group">
                 <label for="txtreceiveraccount">Receiver Account Number:</label>
-                <input type="text" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number">
+                <input type="text" class="form-control" id="txtreceiveraccount" name="txtreceiveraccount" placeholder="Enter Account Number" required>
                 <p th:text="${receiveracnotfound}"></p>
                 <br>
                 <label for="txtragaineceiveraccount">Re-enter Account Number:</label>
-                <input type="text" class="form-control" id="txtragaineceiveraccount" name="txtragaineceiveraccount" placeholder="Enter Account Number">
+                <input type="text" class="form-control" id="txtragaineceiveraccount" name="txtragaineceiveraccount" placeholder="Enter Account Number" required>
                 <p class="text-danger" id="accountError"></p>
                 <p th:text="${receiveracnotfound}"></p>
                 <br>
                 <label for="txtamount">Transfer Amount:</label>
-                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount">
+                <input type="number" class="form-control" id="txtamount" name="txtamount" placeholder="Enter Amount" required>
                 <p class="text-danger" id="amountError"></p>
                 <p th:text="${balanceerr}"></p>
                 <br>
 
                 <label for="txtremark">Remark:</label>
-                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here">
+                <input type="text" class="form-control" id="txtremark" name="txtremark" placeholder="Enter your Remark here" required>
                 <br>
 
 
