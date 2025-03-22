@@ -77,8 +77,8 @@ CREATE TABLE fixeddeposit (
     FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
-
-
+select * from admin;
+update admin set admin_name="Yatik", admin_role="Admin", admin_status="Active" where admin_id=1;
 
 -- select * from fixeddeposit;
 -- SELECT id, account_id, principalAmount, interestRate, tenure, startDate, maturityDate, maturityAmount, status FROM fixeddeposit;
@@ -107,8 +107,6 @@ CREATE TABLE fixeddeposit (
 -- insert into account(customer_id, account_number, account_type, account_balance, account_status)
 -- values("1","1000000001", "Saving Account","0", "Active");
 
--- select * from admin;
--- update admin set admin_name="Yatik", admin_role="Admin", admin_status="Active" where admin_id=1;
 
 
 -- update account set account_status="Pending" where account_id=1;

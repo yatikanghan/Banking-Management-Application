@@ -7,6 +7,7 @@ import Services.Customer_Service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.List;
 
 
 @SpringBootApplication(scanBasePackages = {"com.bankingmanagement.Bankingmanagementapplication", "Services"})
+@EnableMongoRepositories("Repository")
 @EnableScheduling
 public class BankingManagementApplication {
 
