@@ -2,10 +2,13 @@ package com.bankingmanagement.Bankingmanagementapplication;
 
 import MyModel.*;
 import Repository.Customer_Repository;
+import Repository.TodoRepository;
 import Services.Admin_Services;
 import Services.Customer_Service;
+import Services.Todo_Services;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -14,9 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListResourceBundle;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -25,9 +28,12 @@ public class MainController {
     @Autowired
     private Admin_Services admin_services;
 
+    @Autowired
+    private Todo_Services todoServices;
+    private TodoRepository todoRepository;
 
 
-//
+    //
     @RequestMapping("/admindebit")
     public String admindebit(Model model, HttpSession session) {
         try {
@@ -78,7 +84,129 @@ public class MainController {
         return "adminlogin";
     }
 
-//    admin login
+
+//    admin todo
+
+    @RequestMapping("/admintodolist")
+    public String tolist(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                List<Todo> alltodos=todoServices.getAllTodos();
+                List<Todo> mytodos=new ArrayList<>();
+                for(Todo thistodo : alltodos){
+                    if (thistodo.getTodo_admin_id().equals(String.valueOf(currentadmin.getAdmin_id()))){
+                        mytodos.add(thistodo);
+                    }
+                }
+                model.addAttribute("mytodos", mytodos);
+
+                return "admintodolist";
+
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+    @RequestMapping("/addtask")
+    public String addtask(HttpSession session, Model model) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                return "addtodotask";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+
+    @PostMapping("/addtodobtn")
+    public String addtodobtn(@RequestParam String txttodotitle, @RequestParam String txttododesc, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                String strtodoid=UUID.randomUUID().toString();
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentDateTime = dateFormat.format(currentDate);
+
+                Todo newtodo=new Todo(strtodoid, txttodotitle,txttododesc,currentDateTime, String.valueOf(currentadmin.getAdmin_id()));
+                todoServices.createTodo(newtodo);
+                return "redirect:/admintodolist";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+    @GetMapping("/deletetodo/{id}")
+    public String deletetodo(@PathVariable String id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                todoServices.deleteTodo(id);
+                return "redirect:/admintodolist";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
+
+    @GetMapping("/updatetodo/{id}")
+    public String updatetodo(@PathVariable String id, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Todo thistodo=todoServices.getTodoById(id);
+                model.addAttribute("thistodo",thistodo);
+                return "updatetodo";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+
+    }
+    @PostMapping("/updatetodobtn")
+    public String updatetodobtn(@RequestParam String txttodoid, @RequestParam String txttodotitle, @RequestParam String txttododesc, Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Todo thistodo=todoServices.getTodoById(txttodoid);
+                thistodo.setTodo_title(txttodotitle);
+                thistodo.setTodo_desc(txttododesc);
+                todoServices.updateTodo(txttodoid, thistodo);
+                return "redirect:/admintodolist";
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }
+
+
+    //    admin login
     @PostMapping("/adminlogin")
     public String adminlogin(@RequestParam String adminemailid, @RequestParam String adminpassword, Model model, HttpSession session) {
         model.addAttribute("error", "");
@@ -702,12 +830,13 @@ public String adminacconfirm(
                 currentcustomer=customer;
             }
         }
-        for (Account account : accountlist) {
-            if (custid.equals(String.valueOf(account.getCustomer_id()))) {
-                currentaccount=account;
-            }
-        }
+
         if (custid!=null) {
+            for (Account account : accountlist) {
+                if (custid.equals(String.valueOf(account.getCustomer_id()))) {
+                    currentaccount=account;
+                }
+            }
             if (currentaccount.getAccount_status().equals("Active")) {
                 session.setAttribute("custid", custid);
                 session.setAttribute("currentcustomer", currentcustomer);
