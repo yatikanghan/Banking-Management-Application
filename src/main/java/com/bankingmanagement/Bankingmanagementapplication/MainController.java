@@ -651,7 +651,28 @@ public String adminacconfirm(
         }
 
     }
+    /*@RequestMapping("/admindebit")
+    public String admindebit(Model model, HttpSession session) {
+        try {
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
+                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
 
+                    return "admindebit";
+                }
+                else {
+                    return "redirect:/accessdeniedpage";
+                }
+
+            }else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch (NullPointerException e) {
+            return "redirect:/adminlogin";
+        }
+    }*/
 
 
 //    customer register submit
