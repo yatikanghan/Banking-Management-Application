@@ -673,30 +673,13 @@ public String adminacconfirm(
     }
     //    admin support
     @RequestMapping("/adminsupport")
-    public String adminsupport(Model model, HttpSession session) {
-
-        try {
+    public String adminsupport(HttpSession session, Model model) {
+        try{
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
-                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
-                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
-                    List<Support> allsuportlist=admin_services.findAllSupport();
-                    model.addAttribute("allsuportlist", allsuportlist);
-
-                    return "adminsupport";
-                }
-                else {
-                    return "redirect:/accessdeniedpage";
-                }
-            }else {
-                return "redirect:/adminlogin";
+                Admin currentadmin= admin_services.getAdminById(Integer.parseInt(adminid));
             }
         }
-        catch (NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
-
-
     }
 
     @GetMapping("/adminsupport/{id}")
