@@ -678,41 +678,27 @@ public String adminacconfirm(
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
                 Admin currentadmin= admin_services.getAdminById(Integer.parseInt(adminid));
-            }
-        }
-    }
+                if((currentadmin.getAdmin_role().equals("admin"))||(currentadmin.getAdmin_role().equals("support")))
+                {
+                    List<Support> allsupportlist=admin_services.findAllSupport();
+                    model.addAttribute("supportlist", allsupportlist);
 
-    @GetMapping("/adminsupport/{id}")
-    public String adminsupportdetail(@PathVariable Integer id, Model model, HttpSession session) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-
-                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
-                if ((currentadmin.getAdmin_role().equals("Admin")) || currentadmin.getAdmin_role().equals("Support")) {
-                    Support support = admin_services.findSupportRecodebyid(id);
-                    model.addAttribute("support", support);
-                    Customer customer = customerService.findrecodebyid(support.getCustomer_id());
-                    model.addAttribute("customer", customer);
-                    Account account=customerService.findaccountrecodebycustomerid(support.getCustomer_id());
-                    model.addAttribute("account", account);
-
-                    return "adminsupportdetail";
+                    return "adminsupport";
                 }
                 else {
-                    return "redirect:/accessdeniedpage";
+                    return "redirect:/acessdeniedpage";
                 }
 
-
-            }else {
+            }
+            else{
                 return "redirect:/adminlogin";
             }
         }
         catch (NullPointerException e) {
             return "redirect:/adminlogin";
         }
-
     }
+    
 
     @GetMapping("/adminsupportdelete/{id}")
     public String adminsupportdetaildelete(@PathVariable Integer id, Model model, HttpSession session) {
