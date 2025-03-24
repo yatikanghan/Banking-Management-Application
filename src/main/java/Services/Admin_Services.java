@@ -20,25 +20,7 @@ public class Admin_Services {
     @Autowired
     JdbcTemplate template;
 
-    public Admin getAdminById(int admin_id) {
-        String sql = "select * from admin where admin_id=?";
-        return template.queryForObject(sql, new Object[]{admin_id}, new RowMapper<Admin>() {
-            @Override
-            public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Admin admin = new Admin();
-                admin.setAdmin_id(rs.getInt("admin_id"));
-                admin.setAdmin_name(rs.getString("admin_name"));
-                admin.setAdmin_emailid(rs.getString("admin_emailid"));
-                admin.setAdmin_password(rs.getString("admin_password"));
-                admin.setAdmin_status(rs.getString("admin_status"));
-                admin.setAdmin_role(rs.getString("admin_role"));
-                admin.setAdmin_created_at(rs.getString("admin_created_at"));
 
-
-                return admin;
-            }
-        });
-    }
 
     public int updateadmin(String admin_id, String admin_name, String admin_role, String admin_status){
         String sql="update admin set admin_name=?, admin_role=?, admin_status=? where admin_id=?;";

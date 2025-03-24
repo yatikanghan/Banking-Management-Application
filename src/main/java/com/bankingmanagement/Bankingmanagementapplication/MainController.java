@@ -678,7 +678,7 @@ public String adminacconfirm(
             String adminid=session.getAttribute("adminid").toString();
             if (adminid!=null) {
                 Admin currentadmin= admin_services.getAdminById(Integer.parseInt(adminid));
-                if((currentadmin.getAdmin_role().equals("admin"))||(currentadmin.getAdmin_role().equals("support")))
+                if((currentadmin.getAdmin_role().equals("Admin"))||(currentadmin.getAdmin_role().equals("Support")))
                 {
                     List<Support> allsupportlist=admin_services.findAllSupport();
                     model.addAttribute("supportlist", allsupportlist);
@@ -698,7 +698,34 @@ public String adminacconfirm(
             return "redirect:/adminlogin";
         }
     }
-    
+    @GetMapping("/adminsupport/{id}")
+    public String adminsupportdetail(@PathVariable Integer id, Model model, HttpSession session) {
+        try{
+            String adminid=session.getAttribute("adminid").toString();
+            if (adminid!=null) {
+                Admin currentadmin= admin_services.getAdminById(Integer.parseInt(adminid));
+                if((currentadmin.getAdmin_role().equals("Admin"))||(currentadmin.getAdmin_role().equals("Support")))
+                {
+                    Support support = admin_services.findSupportRecodebyid(id);
+                    model.addAttribute("support", support);
+                    Customer customer=customerService.findrecodebyid(support.getCustomer_id());
+                    model.addAttribute("customer", customer);
+                    Account account=customerService.findaccountrecodebycustomerid(support.getAccount_id());
+                    model.addAttribute("account", account);
+                    return "adminsupportdetail";
+                }
+                else {
+                    return "redirect:/acessdeniedpage";
+                }
+            }
+            else {
+                return "redirect:/adminlogin";
+            }
+        }
+        catch(NullPointerException e){
+            return "redirect:/adminlogin";
+        }
+    }
 
     @GetMapping("/adminsupportdelete/{id}")
     public String adminsupportdetaildelete(@PathVariable Integer id, Model model, HttpSession session) {
@@ -748,28 +775,7 @@ public String adminacconfirm(
         }
 
     }
-    /*@RequestMapping("/admindebit")
-    public String admindebit(Model model, HttpSession session) {
-        try {
-            String adminid=session.getAttribute("adminid").toString();
-            if (adminid!=null) {
-                Admin currentadmin=admin_services.getAdminById(Integer.parseInt(adminid));
-                if ((currentadmin.getAdmin_role().equals("Admin")) || (currentadmin.getAdmin_role().equals("Casher")) ) {
-
-                    return "admindebit";
-                }
-                else {
-                    return "redirect:/accessdeniedpage";
-                }
-
-            }else {
-                return "redirect:/adminlogin";
-            }
-        }
-        catch (NullPointerException e) {
-            return "redirect:/adminlogin";
-        }
-    }*/
+    
 
 
 //    customer register submit
