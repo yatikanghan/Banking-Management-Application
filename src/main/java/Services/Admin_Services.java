@@ -21,6 +21,22 @@ public class Admin_Services {
     JdbcTemplate template;
 
 
+    public Admin getAdminById(int admin_id) {
+        String sql = "select * from Admin where admin_id = ?";
+        return template.queryForObject(sql, new Object[]{admin_id}, new RowMapper<Admin>() {
+            @Override
+            public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Admin admin = new Admin();
+                admin.setAdmin_id(rs.getInt("admin_id"));
+                admin.setAdmin_emailid(rs.getString("admin_emailid"));
+                admin.setAdmin_password(rs.getString("admin_password"));
+                admin.setAdmin_status(rs.getString("admin_status"));
+                admin.setAdmin_role(rs.getString("admin_role"));
+                admin.setAdmin_created_at(rs.getString("admin_created_at"));
+                return admin;
+            }
+        });
+    }
 
     public int updateadmin(String admin_id, String admin_name, String admin_role, String admin_status){
         String sql="update admin set admin_name=?, admin_role=?, admin_status=? where admin_id=?;";
@@ -29,7 +45,8 @@ public class Admin_Services {
 
 
 
-    public List<Support> findAllSupport() {
+    public List<Support> findAllSupport()
+    {
 //        String sql = "select * from support";
         String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support";
         RowMapper<Support> rm = new RowMapper<Support>() {
@@ -52,10 +69,12 @@ public class Admin_Services {
         return template.query(sql, rm);
     }
 
-    public Support findSupportRecodebyid(int id) {
+    public Support findSupportRecodebyid(int id)
+    {
         String sql = "select support_id, customer_id, account_id, support_title, support_desc, support_created_at, admin_id, support_status from support where support_id=?";
         return template.queryForObject(sql, new Object[]{id}, new RowMapper<Support>() {
             @Override
+
             public Support mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Support support = new Support();
                 support.setSupport_id(rs.getInt("support_id"));
