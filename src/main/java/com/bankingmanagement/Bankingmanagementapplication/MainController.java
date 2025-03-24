@@ -1186,7 +1186,8 @@ public String adminacconfirm(
     public class CustomerRegistrationController {
 
         @PostMapping
-        public String registerCustomer(
+        public String registerCustomer
+                (
                 @Valid @ModelAttribute("customer") Customer customerDto,
                 BindingResult result,
                 Model model) {
