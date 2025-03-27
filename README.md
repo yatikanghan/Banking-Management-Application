@@ -42,11 +42,13 @@ Before running the application, ensure you have the following installed:
    cd Banking-Management-Application
 
 
-2. **Configure the Database**:
+2. **Create the Database**:
 
 Create a new MySQL database named bankingmanagement.
 Run Query for Add Table and Data : 
 [QUERY](https://github.com/yatikanghan/Banking-Management-Application/blob/master/Check_SQL.sql)
+
+3. **Configure the Database**:
 
 
    Update the application.properties file located in src/main/resources/ with your database credentials:
@@ -57,9 +59,11 @@ Run Query for Add Table and Data :
    spring.datasource.password=your_password
 ```
 
-3. **Build & Run the application** :
+4. **Build & Run the application** :
 
-3. **Access the Application** :
+run application
+
+5. **Access the Application** :
 
    Open your web browser and navigate to http://localhost:8080 to access the application.
    
