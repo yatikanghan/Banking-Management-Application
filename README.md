@@ -57,7 +57,7 @@ Run Query for Add Table and Data :
    spring.datasource.url=jdbc:mysql://localhost:3306/bankingmanagement
    spring.datasource.username=your_username
    spring.datasource.password=your_password
-```
+
 
 4. **Build & Run the application** :
 
