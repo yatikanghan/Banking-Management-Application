@@ -4,10 +4,11 @@
 
 This project showcases a **BANK MANAGEMENT SYSTEM** build with Spring boot for back end logics and HTML and CSS for the front end visualization. Developed using **Spring Boot**, **JAVA**, **Thymeleaf**, and **MySQL**. The system gives a initial banking functionality like account creation, transaction processing, balance enquiry, customer support and user authentication. It also ensures that secure and efficient data management through an SQL database.
 
-
+#
 GITHUB LINK : [Repository](https://github.com/yatikanghan/Banking-Management-Application)
 #
 YOUTUBE LINK : [YOUTUBE](https://www.youtube.com/watch?v=YypJbHAWmcQ)
+#
 
 ## Features
 
