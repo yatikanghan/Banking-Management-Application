@@ -112,10 +112,10 @@ INSERT INTO account (customer_id, account_number, account_type, account_balance,
 VALUES (2, 'DE1000000002', 'Current', '10000', 'Active');
 
 INSERT INTO account (customer_id, account_number, account_type, account_balance, account_status)
-VALUES (3, 'DE1000000003', 'Savings', '7500', 'Deactive');
+VALUES (3, 'DE1000000003', 'Savings', '7500', 'Pending');
 
 INSERT INTO account (customer_id, account_number, account_type, account_balance, account_status)
-VALUES (4, 'DE1000000004', 'Current', '2000', 'Pending');
+VALUES (4, 'DE1000000004', 'Current', '2000', 'Deactive');
 
 INSERT INTO account (customer_id, account_number, account_type, account_balance, account_status)
 VALUES (5, 'DE1000000005', 'Savings', '15000', 'Closed');
