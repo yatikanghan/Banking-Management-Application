@@ -44,7 +44,10 @@ Before running the application, ensure you have the following installed:
 
 2. **Configure the Database**:
 
-Create a new MySQL database named bank_management.
+Create a new MySQL database named bankingmanagement.
+Run Query for Add Table and Data : 
+[QUERY](https://github.com/yatikanghan/Banking-Management-Application/blob/master/Check_SQL.sql)
+
 
    Update the application.properties file located in src/main/resources/ with your database credentials:
    
