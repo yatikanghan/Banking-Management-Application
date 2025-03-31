@@ -64,7 +64,8 @@ Run Query for Add Table and Data :
 run application
 
 5. **Access the Application** :
-
+   For Login data refer this file :
+   SQL refrence : [SAMPLE DATA FOR CHECK]([https://github.com/yatikanghan/Banking-Management-Application](https://github.com/yatikanghan/Banking-Management-Application/blob/master/login_credential.pdf))
    Open your web browser and navigate to http://localhost:8080 to access the application.
    
    **Customer Login** : http://localhost:8080/login
