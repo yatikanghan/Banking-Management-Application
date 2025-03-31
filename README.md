@@ -9,6 +9,8 @@ GITHUB LINK : [Repository](https://github.com/yatikanghan/Banking-Management-App
 #
 YOUTUBE LINK : [YOUTUBE](https://www.youtube.com/watch?v=YypJbHAWmcQ)
 #
+SQL refrence : [SAMPLE DATA FOR CHECK](https://github.com/yatikanghan/Banking-Management-Application/blob/master/login_credential.pdf)
+#
 
 ## Features
 
